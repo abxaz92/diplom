@@ -66,6 +66,10 @@ Painter.prototype.bindEvents = function(){
     this.background.on("mouseup", function(){
         self.moving = false;        
     }); 
+    this.layer.on('click', function(evt) {
+        var shape = evt.targetNode;
+        alert('you clicked on \"' + shape.getName() + '\"');
+    });
 }
 
 Painter.prototype.writeMessage = function(message, mousePos){
