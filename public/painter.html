@@ -16,7 +16,9 @@
    <script type="text/javascript" src="resources/js/aliens/kinetic-v5.1.0.min.js"></script>
    <script type="text/javascript" src="resources/js/painter.js"></script>
    <script defer="defer">
-      initDrawing("container");          
+      // initDrawing("container");   
+      painter = new Painter("container");
+      painter.bindEvents();
    </script>
 </body>
 </html>
