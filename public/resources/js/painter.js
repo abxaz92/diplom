@@ -5,8 +5,8 @@ function Painter(container){
     this.moving = false;
     this.stage = new Kinetic.Stage({
         container: container,
-        width: 500,
-        height: 500
+        width: 1920,
+        height: 1080
     });
     this.layer = new Kinetic.Layer();
     this.stage.add(this.layer);
@@ -34,7 +34,9 @@ Painter.prototype.bindEvents = function(){
     this.background.on("mousedown", function(){
             self.moving = true;
             self.line = new Kinetic.Line({
-                stroke: "red"
+                stroke: "red",
+                strokeWidth: 10,
+                draggable: true
             });
             var mousePos = self.stage.getPointerPosition();
             self.line.points([ mousePos.x, mousePos.y, mousePos.x, mousePos.y]);
@@ -46,12 +48,15 @@ Painter.prototype.bindEvents = function(){
         if(self.moving){
             self.layer.add(self.line);
             var mousePos = self.stage.getPointerPosition();
-            if( Math.abs(mousePos.x - self.start.x) < Math.abs(mousePos.y - self.start.y)){
+            var orto = Math.abs(mousePos.x - self.start.x) - Math.abs(mousePos.y - self.start.y);
+            if(orto < 0){
                 self.line.points()[3] = mousePos.y;
-                self.writeMessage("Длина : " + Math.sqrt( Math.pow(mousePos.x - self.start.x,2)  + Math.pow(mousePos.y - self.start.y,2)));
+                self.line.points()[2] = self.start.x;
+                self.writeMessage("Длина : " + Math.round(Math.sqrt( Math.pow(mousePos.x - self.start.x,2)  + Math.pow(mousePos.y - self.start.y,2))), mousePos);
             } else{
-                self.writeMessage("Длина : " + Math.sqrt( Math.pow(mousePos.x - self.start.x,2)  + Math.pow(mousePos.y - self.start.y,2)));
+                self.writeMessage("Длина : " + Math.round(Math.sqrt( Math.pow(mousePos.x - self.start.x,2)  + Math.pow(mousePos.y - self.start.y,2))), mousePos);
                 self.line.points()[2] = mousePos.x;
+                self.line.points()[3] = self.start.y;
             }
 
             self.layer.drawScene();
@@ -60,11 +65,10 @@ Painter.prototype.bindEvents = function(){
 
     this.background.on("mouseup", function(){
         self.moving = false;        
-        self.writeMessage("");    
     }); 
 }
 
-Painter.prototype.writeMessage = function(message){
+Painter.prototype.writeMessage = function(message, mousePos){
     this.text.setText(message);
     this.layer.draw();
 }
