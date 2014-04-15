@@ -1,0 +1,33 @@
+#main{
+	background-repeat: repeat-y;
+	background-image: url("../img/background.jpg");
+	background-size: cover;
+}
+#header{
+	width: 100%;
+	height: 150px;
+	background-image: url("../img/background.jpg");
+	background-size: cover;
+	background-repeat:no-repeat;
+}
+#menu{
+	float: left;
+	width: 30%;
+	height: 500px;
+	max-width: 250px;
+	clear:left
+}
+#content{
+	padding-left: 250px;
+	float: right;
+	text-align:center;
+	background:#ffffff;
+}
+#footer{
+	clear:both;
+	height:28px;
+	background-color: blue;
+	background-repeat: repeat-x;
+}
+body{
+}
