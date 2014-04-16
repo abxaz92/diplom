@@ -5,33 +5,43 @@
 	<link rel="stylesheet" href="resources/css/main.css">
 	<link rel="stylesheet" href="resources/css/navigation_bar.css">
 
-   <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-   <script type="text/javascript" src="/dpd.js"></script>
-   <script type="text/javascript" src="resources/js/aliens/kinetic-v5.1.0.min.js"></script>
-   <script type="text/javascript" src="resources/js/painter.js"></script>
-   <script src="resources/js/aliens/jqwidgets/jqx-all.js"></script>
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script type="text/javascript" src="/dpd.js"></script>
+	<script type="text/javascript" src="resources/js/aliens/kinetic-v5.1.0.min.js"></script>
+	<script type="text/javascript" src="resources/js/painter.js"></script>
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script src="resources/js/aliens/jqwidgets/jqx-all.js"></script>
 </head>
 <body>
 	<div id="main">
-		<div id="header"></div>
+		<div id="header">
+			<div class="description">Удобное решение для создание сметы</div>
+		</div>
 		<div id="menu">
 			<div class="navbox">
 				<ul class="nav">
-				<li><a href="#">XHTML</a></li>
-				<li><a href="#">C++</a></li>
-				<li><a href="#">Mootools</a></li>
-				<li><a href="#">HTML5</a></li>
-				<li><a href="#">CSS</a></li>
-				<li><a href="#">jQuery</a></li>
-				<li><a href="#">Ajax</a></li>
-				<li><a href="#">PHP</a></li>
-				<li><a href="#">Perl</a></li>
+				<li><a id="home" href="#">Главная</a></li>
+				<li><a id="bases" href="#">Фундамент</a></li>
+				<li><a href="#">Стены</a></li>
+				<li><a href="#">Справка</a></li>
 				</ul>
 			</div>
 		</div>
-		<div id="content"></div>
+		<div id="content">
+		</div>
 		<div id="footer"></div>
 	</div>
 
+<script defer="defer">
+$( "#content" ).load("painter.html");
+	// $('#bases').bind("click",function(){
+	// 	$( "#content" ).load("painter.html");
+	// });
+	$('#home').bind("click",function(){
+		$( "#content" ).empty();
+	});
+	painter = new Painter("container");
+	painter.bindEvents();
+</script>
 </body>
 </html>

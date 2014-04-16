@@ -7,7 +7,7 @@ body{
 	width: 1000px;
 }
 	#main{
-		box-shadow: 0 0 50px rgba(0,0,0,0.5); /* Параметры тени */
+		box-shadow: 0 0 50px rgba(0,0,0,0.5);
 		height: 800px;
 	}
 	#header{
@@ -16,19 +16,43 @@ body{
 		background-image: url("../img/header.jpg");
 		background-size: cover;
 		background-repeat:no-repeat;
-		box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Параметры тени */
+		box-shadow: 0 0 10px rgba(0,0,0,0.5); 
 	}
+		.description{
+			padding-top: 50px;
+			font-size: 23pt
+		}
 	#menu{
 		float: left;
 		width: 250px;
 		height: 500px;
 		clear:left;
-		box-shadow: 0 0 3px rgba(0,0,0,0.5); /* Параметры тени */
+		box-shadow: 0 0 3px rgba(0,0,0,0.5);
 	}
 	#content{
 		width: 750px;
 		float: left;
+		padding-top: 10px;
 	}
+		.canvas{
+			box-shadow: 0 0 5px rgba(0,0,0,0.5);
+			max-width: 650px;
+			float: left;
+		}
+		.palete{
+			display: inline-block;
+			padding-top: 50px;
+			width: 80px;
+			height: 200px;
+			box-shadow: 0 0 5px rgba(0,0,0,0.5);
+		}
+			.palete img{
+				box-shadow: 0 0 20px rgba(0,0,0,0.5);
+			}
+			.palete img:active{
+				box-shadow: 0 0 0px rgba(0,0,0,0.5);
+			}
+			
 	#footer{
 		clear:both;
 		height:50px;
