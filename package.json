@@ -1,0 +1,20 @@
+{
+  "name": "padmenu",
+  "version": "0.0.1",
+  "description": "padenu app",
+  "keywords": [],
+  "homepage": "",
+  "author": "zangi",
+  "contributors": [],
+  "dependencies": {
+    "deployd": ">= 0"	
+  },
+  "scripts": {
+    "start": "node server"
+  },
+  "engines": {
+    "node": "0.8.*",
+    "npm":  "1.2.x"
+  },
+  "license": "MIT"
+}

@@ -89,6 +89,6 @@ Painter.prototype.initPalete = function(){
     var self = this;
     $('#delete').bind("click",function(){
         // if (!self.delete) self.delete = true else self.delete = false;
-        self.delete = ( !self.delete ) ? true : false
+        self.delete = ( !self.delete) ? true : false
     });
 }
