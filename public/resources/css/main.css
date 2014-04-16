@@ -1,33 +1,35 @@
-#main{
-	background-repeat: repeat-y;
-	background-image: url("../img/background.jpg");
-	background-size: cover;
-}
-#header{
-	width: 100%;
-	height: 150px;
-	background-image: url("../img/background.jpg");
-	background-size: cover;
-	background-repeat:no-repeat;
-}
-#menu{
-	float: left;
-	width: 30%;
-	height: 500px;
-	max-width: 250px;
-	clear:left
-}
-#content{
-	padding-left: 250px;
-	float: right;
-	text-align:center;
-	background:#ffffff;
-}
-#footer{
-	clear:both;
-	height:28px;
-	background-color: blue;
-	background-repeat: repeat-x;
-}
 body{
+	background-repeat: repeat-y;
+	background-image: url("../img/background1.jpg");
+	background-size: cover;
+	margin: 0 auto;
+	text-align:center;
+	width: 1000px;
 }
+	#main{
+		box-shadow: 0 0 50px rgba(0,0,0,0.5); /* Параметры тени */
+	}
+	#header{
+		width: 1000px;
+		height: 150px;
+		background-image: url("../img/header.jpg");
+		background-size: cover;
+		background-repeat:no-repeat;
+		box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Параметры тени */
+	}
+	#menu{
+		float: left;
+		width: 250px;
+		height: 500px;
+		clear:left;
+		box-shadow: 0 0 3px rgba(0,0,0,0.5); /* Параметры тени */
+	}
+	#content{
+		width: 750px;
+		float: left;
+	}
+	#footer{
+		clear:both;
+		height:50px;
+		background-repeat: repeat-x;
+	}
