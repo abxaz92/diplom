@@ -1,10 +1,10 @@
 {
-  "name": "padmenu",
+  "name": "smetacreator",
   "version": "0.0.1",
-  "description": "padenu app",
+  "description": "smetacreator app",
   "keywords": [],
   "homepage": "",
-  "author": "zangi",
+  "author": "david",
   "contributors": [],
   "dependencies": {
     "deployd": ">= 0"	
