@@ -1,33 +1,51 @@
+* {margin: 0; padding: 0;}
+html,body{height:100%}
+body{position:relative; overflow: hidden;}
+	body:after{background: url("../img/background.jpg") no-repeat 0 0; background-size: 100%; content: ''; display: block; position: absolute; top: 0; bottom: 0; right: 0; left: 0;z-index: -1;opacity: .2}
 #main{
-	background-repeat: repeat-y;
-	background-image: url("../img/background.jpg");
-	background-size: cover;
+	background: #fafafa;
+	position: relative;
+	height: 100%;
+	width: 1000px;
+	margin: 0 auto;
 }
 #header{
-	width: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
 	height: 150px;
-	background-image: url("../img/background.jpg");
+	outline: 1px solid #f00;
+	/*background-image: url("../img/background.jpg");
 	background-size: cover;
-	background-repeat:no-repeat;
+	background-repeat:no-repeat;*/
 }
 #menu{
-	float: left;
-	width: 30%;
-	height: 500px;
-	max-width: 250px;
-	clear:left
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: auto;
+	bottom: 30px;
+	width: 250px;
+	outline: 1px solid #f0f;
 }
 #content{
-	padding-left: 250px;
+	position: absolute;
+	top: 0;
+	left: auto;
+	right: 0;
+	bottom: 30px;
+	width: 750px;
 	float: right;
-	text-align:center;
 	background:#ffffff;
+	outline: 1px solid #ff0;
 }
 #footer{
-	clear:both;
-	height:28px;
-	background-color: blue;
-	background-repeat: repeat-x;
-}
-body{
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	outline: 1px solid #0f0;
+	height:30px;
+	background-color: #00f;
 }
