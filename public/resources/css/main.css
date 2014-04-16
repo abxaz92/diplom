@@ -8,6 +8,7 @@ body{
 }
 	#main{
 		box-shadow: 0 0 50px rgba(0,0,0,0.5); /* Параметры тени */
+		height: 800px;
 	}
 	#header{
 		width: 1000px;
