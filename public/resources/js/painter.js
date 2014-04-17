@@ -5,8 +5,8 @@ function Painter(container){
     this.moving = false;
     this.stage = new Kinetic.Stage({
         container: container,
-        width: 1920,
-        height: 1080
+        width: 600,
+        height: 500
     });
     this.layer = new Kinetic.Layer();
     this.stage.add(this.layer);
@@ -28,20 +28,30 @@ function Painter(container){
     this.layer.add(this.background);
     this.layer.add(this.text);
     this.stage.add(this.layer);
+    this.delete = false;
 }
 Painter.prototype.bindEvents = function(){
     var self = this;
     this.background.on("mousedown", function(){
+        if(!self.delete){
             self.moving = true;
             self.line = new Kinetic.Line({
                 stroke: "red",
                 strokeWidth: 10,
                 draggable: true
             });
+            line = self.line;
+            line.on('click', function() {
+                var shape = this.attrs.id;
+                line.destroy(shape);
+                self.layer.draw();
+                self.delete && this.remove();
+            });
             var mousePos = self.stage.getPointerPosition();
             self.line.points([ mousePos.x, mousePos.y, mousePos.x, mousePos.y]);
             self.start = {x:mousePos.x, y:mousePos.y}
             self.layer.drawScene();
+        }
     });
 
     this.background.on("mousemove", function(){
@@ -52,9 +62,9 @@ Painter.prototype.bindEvents = function(){
             if(orto < 0){
                 self.line.points()[3] = mousePos.y;
                 self.line.points()[2] = self.start.x;
-                self.writeMessage("Длина : " + Math.round(Math.sqrt( Math.pow(mousePos.x - self.start.x,2)  + Math.pow(mousePos.y - self.start.y,2))), mousePos);
+                self.writeMessage("Длина : " + Math.round(Math.sqrt( Math.pow(mousePos.x - self.start.x,2)  + Math.pow(mousePos.y - self.start.y,2))/16), mousePos);
             } else{
-                self.writeMessage("Длина : " + Math.round(Math.sqrt( Math.pow(mousePos.x - self.start.x,2)  + Math.pow(mousePos.y - self.start.y,2))), mousePos);
+                self.writeMessage("Длина : " + Math.round(Math.sqrt( Math.pow(mousePos.x - self.start.x,2)  + Math.pow(mousePos.y - self.start.y,2))/16), mousePos);
                 self.line.points()[2] = mousePos.x;
                 self.line.points()[3] = self.start.y;
             }
@@ -68,11 +78,17 @@ Painter.prototype.bindEvents = function(){
     }); 
     this.layer.on('click', function(evt) {
         var shape = evt.targetNode;
-        alert('you clicked on \"' + shape.getName() + '\"');
     });
 }
 
 Painter.prototype.writeMessage = function(message, mousePos){
     this.text.setText(message);
     this.layer.draw();
+}
+Painter.prototype.initPalete = function(){
+    var self = this;
+    $('#delete').bind("click",function(){
+        // if (!self.delete) self.delete = true else self.delete = false;
+        self.delete = ( !self.delete) ? true : false
+    });
 }

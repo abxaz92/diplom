@@ -1,24 +1,9 @@
-<!DOCTYPE HTML>
-<html>
-<head>
-   <style type="text/css">
-   .canvas {
-      width: 504px;
+<div class="canvas" id="container"></div>
+<div class="palete"><img id="delete" src="resources/img/buttons/delete.png" width="20" height="20" border="0" alt="javascript button"></div>
 
-   }
-   </style>
-</head>
-<body>
-   <h1>Привет</h1>
-   <div class="canvas" id="container"></div>
-   <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-   <script type="text/javascript" src="/dpd.js"></script>
-   <script type="text/javascript" src="resources/js/aliens/kinetic-v5.1.0.min.js"></script>
-   <script type="text/javascript" src="resources/js/painter.js"></script>
-   <script defer="defer">
-      // initDrawing("container");   
-      painter = new Painter("container");
-      painter.bindEvents();
-   </script>
-</body>
-</html>
+<script defer="defer">
+   // initDrawing("container");   
+   painter = new Painter("container");
+   painter.bindEvents();
+   painter.initPalete();
+</script>
