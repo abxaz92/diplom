@@ -6,15 +6,16 @@
 	<link rel="stylesheet" href="resources/css/navigation_bar.css">
 
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-	<script type="text/javascript" src="/dpd.js"></script>
-	<script type="text/javascript" src="resources/js/aliens/kinetic-v5.1.0.min.js"></script>
-	<script type="text/javascript" src="resources/js/painter.js"></script>
+	<script src="/dpd.js"></script>
+	<script src="resources/js/aliens/kinetic-v5.1.0.min.js"></script>
+	<script src="resources/js/painter.js"></script>
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script src="resources/js/aliens/jqwidgets/jqx-all.js"></script>
 </head>
 <body>
 	<div id="main">
 		<div id="header">
+			<img class="logo" src="resources/img/ruki kottedzh.png">
 			<div class="description">Удобное решение для создание сметы</div>
 		</div>
 		<div id="menu">
@@ -34,14 +35,15 @@
 
 <script defer="defer">
 // $( "#content" ).load("painter.html");
+	$("#content" ).load("home.html");
 	$('#bases').bind("click",function(){
+		$( "#content" ).empty();
 		$( "#content" ).load("painter.html");
 	});
 	$('#home').bind("click",function(){
 		$( "#content" ).empty();
+		$( "#content" ).load("home.html");
 	});
-	painter = new Painter("container");
-	painter.bindEvents();
 </script>
 </body>
 </html>

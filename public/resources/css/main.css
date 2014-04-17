@@ -22,6 +22,10 @@ body{
 			padding-top: 50px;
 			font-size: 23pt
 		}
+		.logo{
+			width: 200px;
+			float: left;
+		}
 	#menu{
 		float: left;
 		width: 250px;

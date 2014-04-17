@@ -62,9 +62,9 @@ Painter.prototype.bindEvents = function(){
             if(orto < 0){
                 self.line.points()[3] = mousePos.y;
                 self.line.points()[2] = self.start.x;
-                self.writeMessage("Длина : " + Math.round(Math.sqrt( Math.pow(mousePos.x - self.start.x,2)  + Math.pow(mousePos.y - self.start.y,2))), mousePos);
+                self.writeMessage("Длина : " + Math.round(Math.sqrt( Math.pow(mousePos.x - self.start.x,2)  + Math.pow(mousePos.y - self.start.y,2))/16), mousePos);
             } else{
-                self.writeMessage("Длина : " + Math.round(Math.sqrt( Math.pow(mousePos.x - self.start.x,2)  + Math.pow(mousePos.y - self.start.y,2))), mousePos);
+                self.writeMessage("Длина : " + Math.round(Math.sqrt( Math.pow(mousePos.x - self.start.x,2)  + Math.pow(mousePos.y - self.start.y,2))/16), mousePos);
                 self.line.points()[2] = mousePos.x;
                 self.line.points()[3] = self.start.y;
             }
