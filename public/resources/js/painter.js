@@ -96,6 +96,8 @@ Painter.prototype.initPalete = function(){
             $('#delete').removeClass('unselected');
         }
     });
+
+    // 
     $('#line').bind("click",function(){
         $('#windowLine').jqxWindow('open');
     })
@@ -113,6 +115,7 @@ Painter.prototype.initPalete = function(){
     });
     $("#windowLine").jqxWindow('close');
  
+ // 
     $('#rect').bind("click",function(){
         $('#windowRect').jqxWindow('open');
     })
@@ -129,6 +132,13 @@ Painter.prototype.initPalete = function(){
         $("#windowRect").jqxWindow('close');
     });
     $("#windowRect").jqxWindow('close');
+
+    // 
+    $('#lineWeight').jqxInput({placeHolder: "Стена: 400", height: 20, width: 65});
+    $('#lineWeight').on('change', function(){
+        self.lineWeight = parseFloat(this.value)/40;
+    })
+
 }
 Painter.prototype.addRect = function(width, height){
     var self = this;
