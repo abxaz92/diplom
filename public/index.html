@@ -3,7 +3,7 @@
 <head>
  	<title>Whitesquare</title>
 	<link rel="stylesheet" href="resources/css/main.css">
-	<!-- <link rel="stylesheet" href="resources/css/navigation_bar.css"> -->
+	<link rel="stylesheet" href="resources/js/aliens/jqwidgets/styles/jqx.base.css" type="text/css" />
 
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script src="/dpd.js"></script>
@@ -11,6 +11,8 @@
 	<script src="resources/js/painter.js"></script>
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script src="resources/js/aliens/jqwidgets/jqx-all.js"></script>
+	<script src="resources/js/aliens/jqwidgets/jqxcore.js"></script>
+
 </head>
 <body>
 	<div id="main">
@@ -18,34 +20,17 @@
 			<img class="logo" src="resources/img/ruki kottedzh.png">
 			<div class="description">Удобное решение для создание сметы</div>
 		</div>
-		<div id="menu">
-			<div class="nav">
-				<ul>
-				<li><a class="tn" id="home" href="#">Главная</a></li>
-				<li><a class="tn" id="bases" href="#">Фундамент</a></li>
-				<li><a class="tn" href="#">Стены</a></li>
-				<li><a class="tn" href="#">Справка</a></li>
-				</ul>
-			</div>
-		</div>
-		<div id="content">
-		</div>
-		<div id="footer">
-			<span>Copyright &copy; 2014 Chavezzzz...</span>
-		</div>
+		<div id="menu"></div>
+		<div id="content"></div>
+		<div id="footer"></div>
 	</div>
 
 <script defer="defer">
-// $( "#content" ).load("painter.html");
-	$("#content" ).load("home.html");
-	$('#bases').bind("click",function(){
-		$( "#content" ).empty();
-		$( "#content" ).load("painter.html");
-	});
-	$('#home').bind("click",function(){
-		$( "#content" ).empty();
-		$( "#content" ).load("home.html");
-	});
+$( "#content" ).load("painter.html");
+$( "#footer" ).load("footer.html");
+$( "#menu" ).load("menu.html");
+
+	
 </script>
 </body>
 </html>

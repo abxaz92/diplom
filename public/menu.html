@@ -1,0 +1,19 @@
+<div class="nav">
+	<ul>
+	<li><a class="tn" id="home" href="#">Главная</a></li>
+	<li><a class="tn" id="bases" href="#">Фундамент</a></li>
+	<li><a class="tn" href="#">Стены</a></li>
+	<li><a class="tn" href="#">Справка</a></li>
+	</ul>
+</div>
+<script>
+	// $("#content" ).load("home.html");
+	$('#bases').bind("click",function(){
+		$( "#content" ).empty();
+		$( "#content" ).load("painter.html");
+	});
+	$('#home').bind("click",function(){
+		$( "#content" ).empty();
+		$( "#content" ).load("home.html");
+	});
+</script>

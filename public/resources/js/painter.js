@@ -88,7 +88,12 @@ Painter.prototype.writeMessage = function(message, mousePos){
 Painter.prototype.initPalete = function(){
     var self = this;
     $('#delete').bind("click",function(){
-        // if (!self.delete) self.delete = true else self.delete = false;
-        self.delete = ( !self.delete) ? true : false
+        if(self.delete){
+            self.delete = false;
+            $('#delete').addClass('unselected');
+        } else {
+            self.delete = true;
+            $('#delete').removeClass('unselected');
+        }
     });
 }

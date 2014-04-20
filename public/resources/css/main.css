@@ -16,7 +16,7 @@ body{
 #main{
 	/*background: #fafafa;*/
 	position: relative;
-	height: 100%;
+	height: 850px;
 	width: 1000px;
 	margin: 0 auto;
 	box-shadow: 0 0 50px rgba(0,0,0,0.5);
@@ -99,17 +99,19 @@ body{
 		}
 		.palete{
 			display: inline-block;
-			padding-top: 50px;
+			padding-top: 30px;
+			padding-left: 10px;
 			width: 80px;
 			height: 200px;
 			box-shadow: 0 0 5px rgba(0,0,0,0.5);
 		}
-			.palete img{
+			.unselected{
 				box-shadow: 0 0 20px rgba(0,0,0,0.5);
 			}
-			.palete img:active{
-				box-shadow: 0 0 0px rgba(0,0,0,0.5);
-			}			
+			.selected{
+				box-shadow: 0 0 0px rgba(0,0,0,0.5);	
+			}
+
 	#footer{
 		position: absolute;
 		bottom: 0;
