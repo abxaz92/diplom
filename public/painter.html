@@ -1,6 +1,22 @@
 <div class="canvas" id="container"></div>
 <div class="palete">
 	<img id="delete" class="unselected" src="resources/img/buttons/delete.png" width="20" height="20" border="0" alt="javascript button">
+	<div id="windowLine">
+		<div>Линия</div>
+		<div >
+			<div class="form"> <label>Длина</label> <input type="text" id="lineLength"/></div>
+			<div class="form"> <label>Угол</label> <input type="text" id="lineAngle"/></div>
+			<input type="button" value="Добавить" id='addLine'/>
+		</div>
+	</div>
+	<div id="windowRect">
+		<div>Прямоугольник</div>
+		<div >
+			<div class="form"> <label>Длина</label> <input type="text" id="rectHeight"/></div>
+			<div class="form"> <label>Ширина</label> <input type="text" id="rectWidth"/></div>
+			<input type="button" value="Добавить" id='addRect'/>
+		</div>
+	</div>
 </div>
 
 <script defer="defer">
@@ -8,4 +24,31 @@
    painter = new Painter("container");
    painter.bindEvents();
    painter.initPalete();
+
+    $("#windowLine").jqxWindow({ width: 300, height: 130, isModal: true });
+    $('#lineLength').jqxInput({placeHolder: "10", height: 25, width: 200});
+    $('#lineAngle').jqxInput({placeHolder: "0", height: 25, width: 200});
+    $("#addLine").jqxButton({ width: '150'});
+    $("#addLine").on('click', function () {
+    	var length = $('#lineLength').val();
+    	var angle = $('#lineAngle').val();
+    	if(length == "") length = 10;
+    	if(angle == "") angle = 0;
+       	painter.addLine(length * 16 , parseFloat(angle));
+       	$("#windowLine").jqxWindow('close');
+    });
+
+ 
+    $("#windowRect").jqxWindow({ width: 300, height: 130, isModal: true });
+    $('#rectHeight').jqxInput({placeHolder: "10", height: 25, width: 200});
+    $('#rectWidth').jqxInput({placeHolder: "10", height: 25, width: 200});
+    $("#addRect").jqxButton({ width: '150'});
+    $("#addRect").on('click', function () {
+    	var height = $('#rectHeight').val();
+    	var width = $('#rectWidth').val();
+    	if(height == "") height = 10;
+    	if(width == "") width = 10;
+       	painter.addRect(height * 16 , width*16);
+       	$("#windowRect").jqxWindow('close');
+    });
 </script>
