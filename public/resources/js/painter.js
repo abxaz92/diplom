@@ -98,11 +98,10 @@ Painter.prototype.initPalete = function(){
     });
 
     // 
-    $('#lineWeight').jqxInput({placeHolder: "Стена: 400", height: 20, width: 65});
+    $('#lineWeight').jqxInput({placeHolder: "Стена: 400", height: 20, width: 70});
     $('#lineWeight').on('change', function(){
         self.lineWeight = parseFloat(this.value)/40;
     })
-
 }
 Painter.prototype.addRect = function(width, height){
     var self = this;
