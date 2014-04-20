@@ -1,6 +1,8 @@
 <div class="canvas" id="container"></div>
 <div class="palete">
 	<img id="delete" class="unselected" src="resources/img/buttons/delete.png" width="20" height="20" border="0" alt="javascript button">
+	<img id="line" class="unselected" src="resources/img/buttons/line.png" width="20" height="20" border="0" alt="javascript button">
+	<img id="rect" class="unselected" src="resources/img/buttons/rect.png" width="20" height="20" border="0" alt="javascript button">
 	<div id="windowLine">
 		<div>Линия</div>
 		<div >
@@ -24,7 +26,9 @@
    painter = new Painter("container");
    painter.bindEvents();
    painter.initPalete();
-
+   	$('#line').bind("click",function(){
+   		$('#windowLine').jqxWindow('open');
+   	})
     $("#windowLine").jqxWindow({ width: 300, height: 130, isModal: true });
     $('#lineLength').jqxInput({placeHolder: "10", height: 25, width: 200});
     $('#lineAngle').jqxInput({placeHolder: "0", height: 25, width: 200});
@@ -37,8 +41,11 @@
        	painter.addLine(length * 16 , parseFloat(angle));
        	$("#windowLine").jqxWindow('close');
     });
-
+    $("#windowLine").jqxWindow('close');
  
+    $('#rect').bind("click",function(){
+   		$('#windowRect').jqxWindow('open');
+   	})
     $("#windowRect").jqxWindow({ width: 300, height: 130, isModal: true });
     $('#rectHeight').jqxInput({placeHolder: "10", height: 25, width: 200});
     $('#rectWidth').jqxInput({placeHolder: "10", height: 25, width: 200});
@@ -51,4 +58,5 @@
        	painter.addRect(height * 16 , width*16);
        	$("#windowRect").jqxWindow('close');
     });
+    $("#windowRect").jqxWindow('close');
 </script>
