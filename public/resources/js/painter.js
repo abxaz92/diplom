@@ -24,7 +24,8 @@ function Painter(container){
         fontSize: 24,
         text: '',
         fill: 'black'
-    })
+    });
+    this.lineWeight = 15;
     this.layer.add(this.background);
     this.layer.add(this.text);
     this.stage.add(this.layer);
@@ -37,15 +38,15 @@ Painter.prototype.bindEvents = function(){
             self.moving = true;
             self.line = new Kinetic.Line({
                 stroke: "red",
-                strokeWidth: 10,
+                strokeWidth: self.lineWeight,
                 draggable: true
             });
             line = self.line;
-            line.on('click', function() {
-                var shape = this.attrs.id;
+            line.on('click', function(evt) {
+                var shape = evt.targetNode;
                 line.destroy(shape);
-                self.layer.draw();
                 self.delete && this.remove();
+                self.layer.draw();
             });
             var mousePos = self.stage.getPointerPosition();
             self.line.points([ mousePos.x, mousePos.y, mousePos.x, mousePos.y]);
@@ -62,9 +63,9 @@ Painter.prototype.bindEvents = function(){
             if(orto < 0){
                 self.line.points()[3] = mousePos.y;
                 self.line.points()[2] = self.start.x;
-                self.writeMessage("Длина : " + Math.round(Math.sqrt( Math.pow(mousePos.x - self.start.x,2)  + Math.pow(mousePos.y - self.start.y,2))/16), mousePos);
+                self.writeMessage("Длина : " + Math.round(Math.sqrt( Math.pow(mousePos.x - self.start.x,2)  + Math.pow(mousePos.y - self.start.y,2))/16) + "  Угол: 90");
             } else{
-                self.writeMessage("Длина : " + Math.round(Math.sqrt( Math.pow(mousePos.x - self.start.x,2)  + Math.pow(mousePos.y - self.start.y,2))/16), mousePos);
+                self.writeMessage("Длина : " + Math.round(Math.sqrt( Math.pow(mousePos.x - self.start.x,2)  + Math.pow(mousePos.y - self.start.y,2))/16) + "  Угол: 0");
                 self.line.points()[2] = mousePos.x;
                 self.line.points()[3] = self.start.y;
             }
@@ -80,8 +81,7 @@ Painter.prototype.bindEvents = function(){
         var shape = evt.targetNode;
     });
 }
-
-Painter.prototype.writeMessage = function(message, mousePos){
+Painter.prototype.writeMessage = function(message){
     this.text.setText(message);
     this.layer.draw();
 }
@@ -94,6 +94,56 @@ Painter.prototype.initPalete = function(){
         } else {
             self.delete = true;
             $('#delete').removeClass('unselected');
+            // for(var i in self.shapes){
+            //     var shape = self.stage.find(self.shapes[i])[0];
+            //     shape.remove();
+            // }
         }
     });
+}
+Painter.prototype.addRect = function(width, height){
+    var self = this;
+    var rect = new Kinetic.Rect({
+        x: 10,
+        y: 10,
+        width: width,
+        height: height,
+        stroke: "red",
+        strokeWidth: this.lineWeight,
+        draggable: true
+    });
+    rect.on('click', function() {
+        var shape = this.attrs.id;
+        line.destroy(shape);
+        self.delete && this.remove();
+        self.layer.draw();
+    });
+    this.writeMessage("Ширина: " + width + " Длина: " + height);
+    this.layer.add(rect);
+    this.layer.drawScene();
+}
+Painter.prototype.addLine = function(length, angle){
+    var self = this;
+    var start = {x : 150, y : 150};
+    angle += 90;
+    var end = {
+         x : length * Math.sin(angle*Math.PI/180) + start.x
+        ,y : length * Math.cos(angle*Math.PI/180) + start.y
+    }
+    var line = new Kinetic.Line({
+        points: [start.x, start.y, end.x, end.y],
+        stroke: "red",
+        strokeWidth: this.lineWeight,
+        draggable: true
+    });
+
+    line.on('click', function() {
+        var shape = this.attrs.id;
+        line.destroy(shape);
+        self.delete && this.remove();
+        self.layer.draw();
+    });
+    this.writeMessage("Длина : " + Math.round(Math.sqrt( Math.pow(end.x - start.x,2)  + Math.pow(end.y - start.y,2))/16) + "  Угол:" + (angle-90));
+    this.layer.add(line);
+    this.layer.drawScene();
 }
