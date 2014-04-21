@@ -14,6 +14,7 @@ body{
 }
 .tn {transition:all .5s ease; -webkit-transition:all .5s ease}
 .cp {cursor:pointer}
+.inln {display: inline-block;}
 #main{
 	/*background: #fafafa;*/
 	position: relative;

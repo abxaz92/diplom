@@ -25,7 +25,7 @@ function Painter(container){
         text: '',
         fill: 'black'
     });
-    this.lineWeight = 15;
+    this.lineWeight = 20;
     this.deep = 2;
     this.layer.add(this.background);
     this.layer.add(this.text);
@@ -41,7 +41,8 @@ Painter.prototype.bindEvents = function(){
             self.line = new Kinetic.Line({
                 stroke: "red",
                 strokeWidth: self.lineWeight,
-                draggable: true
+                draggable: true,
+                name : "name"
             });
             var line = self.line;
             line.on('click', function(evt) {
@@ -92,13 +93,14 @@ Painter.prototype.writeMessage = function(message){
 Painter.prototype.addRect = function(width, height){
     var self = this;
     var rect = new Kinetic.Rect({
-        x: 10,
-        y: 10,
+        x: 80,
+        y: 80,
         width: width,
         height: height,
         stroke: "red",
         strokeWidth: this.lineWeight,
-        draggable: true
+        draggable: true,
+        name : "name"
     });
     rect.on('click', function() {
         var shape = this.attrs.id;
@@ -109,6 +111,7 @@ Painter.prototype.addRect = function(width, height){
     this.writeMessage("Ширина: " + width/16+"м" + "  Длина: " + height/16+"м");
     this.layer.add(rect);
     this.layer.draw();
+    console.log(this.layer.find("Rect"));
 }
 Painter.prototype.addLine = function(length, angle){
     var self = this;
@@ -122,7 +125,8 @@ Painter.prototype.addLine = function(length, angle){
         points: [start.x, start.y, end.x, end.y],
         stroke: "red",
         strokeWidth: this.lineWeight,
-        draggable: true
+        draggable: true,
+        name : "name"
     });
 
     line.on('click', function() {
@@ -152,13 +156,16 @@ Painter.prototype.initPalete = function(){
     $('#lineWeight').on('change', function(){
         if(this.value == "") self.lineWeight = 10 
             else if( parseFloat(this.value) > 1000 || parseFloat(this.value) < 120 ) alert("Недопустимая ширина стены")
-                else self.lineWeight = parseFloat(this.value)/40;
+                else self.lineWeight = parseFloat(this.value)/20;
     })
     // 
     $('#deep').jqxInput({placeHolder: "Высота: 2м", height: 20, width: 85});
     $('#deep').on('change', function(){
         if(this.value == "") self.deep = 2 
-            else if( parseFloat(this.value) > 7000 || parseFloat(this.value) < 120 ) alert("Недопустимая ширина стены")
+            else if( parseFloat(this.value) > 7 || parseFloat(this.value) < 0.12 ) alert("Недопустимая ширина стены")
                 else self.deep = parseFloat(this.value);
     })
 }
+Painter.prototype.getStage = function(){return this.stage}
+Painter.prototype.getLineWeight = function(){return this.lineWeight*20}
+Painter.prototype.getDeep = function(){return this.deep}

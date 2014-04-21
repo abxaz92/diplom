@@ -30,7 +30,12 @@
             </div>
         </div>
     </div>
+    <div>
+        <input type="button" value="Расчитать" id='calculate' />
+        <div id="marka" class="inln"></div>
+    </div>
 </div>
+
 
 <script defer="defer">
    var  painter = new Painter("container");
@@ -75,6 +80,40 @@
     $("#toggle").bind("click",function(){
         $('#painter').toggle('slow');
         isPainter = (isPainter) ? false : true
+    });
+
+    
+    var source = [
+         {name:"М-100", id:"170"}
+        ,{name:"М-150", id:"200"}
+        ,{name:"М-200", id:"240"}
+        ,{name:"М-250", id:"300"}
+        ,{name:"М-300", id:"320"}
+    ];
+    $("#marka").jqxDropDownList({source: source, displayMember: "name", valueMember: "id", selectedIndex: 2, width: '100', height: '30', autoDropDownHeight: true, theme: "metro"});
+    $("#calculate").jqxButton({ width: '150', height:'25'});
+    $("#calculate").on('click', function () {
+        var stage = painter.getStage();
+        var nodes = stage.find(".name");
+        var width = 0;
+        for(var i in nodes){
+            if(nodes[i].className == "Line"){
+                var points = nodes[i].points()
+                width += Math.round(Math.sqrt( Math.pow(points[2] - points[0],2)  + Math.pow(points[3] - points[1],2))/16);
+            }
+            if(nodes[i].className == "Rect"){
+                var w = Math.round(nodes[i].getWidth()/16);
+                var h = Math.round(nodes[i].getHeight()/16);
+                width += 2*(h+w);
+            }
+        }
+        var shir = painter.getLineWeight()/1000;
+        var heig = painter.getDeep();
+        var marka = $('#marka').val();
+        console.log({width:width, heig:heig, heigh:0, shir:shir, marka:marka});
+        dpd.basemodule.get({width:width, heig:heig, heigh:0, shir:shir, marka:marka}, function(res, e){
+            console.log(res, e);
+        });
     });
 </script>
 
