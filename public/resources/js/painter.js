@@ -26,6 +26,7 @@ function Painter(container){
         fill: 'black'
     });
     this.lineWeight = 15;
+    this.deep = 2;
     this.layer.add(this.background);
     this.layer.add(this.text);
     this.stage.add(this.layer);
@@ -41,12 +42,14 @@ Painter.prototype.bindEvents = function(){
                 strokeWidth: self.lineWeight,
                 draggable: true
             });
-            line = self.line;
+            var line = self.line;
             line.on('click', function(evt) {
-                var shape = evt.targetNode;
-                line.destroy(shape);
-                self.delete && this.remove();
-                self.layer.draw();
+                if (self.delete) {
+                    var shape = evt.targetNode;
+                    line.destroy(shape);
+                    this.remove();  
+                    self.layer.drawScene();
+                } 
             });
             var mousePos = self.stage.getPointerPosition();
             self.line.points([ mousePos.x, mousePos.y, mousePos.x, mousePos.y]);
@@ -85,24 +88,6 @@ Painter.prototype.writeMessage = function(message){
     this.text.setText(message);
     this.layer.draw();
 }
-Painter.prototype.initPalete = function(){
-    var self = this;
-    $('#delete').bind("click",function(){
-        if(self.delete){
-            self.delete = false;
-            $('#delete').addClass('unselected');
-        } else {
-            self.delete = true;
-            $('#delete').removeClass('unselected');
-        }
-    });
-
-    // 
-    $('#lineWeight').jqxInput({placeHolder: "Стена: 400", height: 20, width: 70});
-    $('#lineWeight').on('change', function(){
-        self.lineWeight = parseFloat(this.value)/40;
-    })
-}
 Painter.prototype.addRect = function(width, height){
     var self = this;
     var rect = new Kinetic.Rect({
@@ -116,13 +101,13 @@ Painter.prototype.addRect = function(width, height){
     });
     rect.on('click', function() {
         var shape = this.attrs.id;
-        line.destroy(shape);
+        rect.destroy(shape);
         self.delete && this.remove();
-        self.layer.draw();
+        self.layer.drawScene();
     });
-    this.writeMessage("Ширина: " + width + " Длина: " + height);
+    this.writeMessage("Ширина: " + width/16+"м" + "  Длина: " + height/16+"м");
     this.layer.add(rect);
-    this.layer.drawScene();
+    this.layer.draw();
 }
 Painter.prototype.addLine = function(length, angle){
     var self = this;
@@ -143,9 +128,36 @@ Painter.prototype.addLine = function(length, angle){
         var shape = this.attrs.id;
         line.destroy(shape);
         self.delete && this.remove();
-        self.layer.draw();
+        self.layer.drawScene();
     });
     this.writeMessage("Длина : " + Math.round(Math.sqrt( Math.pow(end.x - start.x,2)  + Math.pow(end.y - start.y,2))/16) + "  Угол:" + (angle-90));
     this.layer.add(line);
-    this.layer.drawScene();
+    this.layer.draw();
+}
+Painter.prototype.initPalete = function(){
+    var self = this;
+    $('#delete').bind("click",function(){
+        if(self.delete){
+            self.delete = false;
+            $('#delete').addClass('unselected');
+        } else {
+            self.delete = true;
+            $('#delete').removeClass('unselected');
+        }
+    });
+
+    // 
+    $('#lineWeight').jqxInput({placeHolder: "Стена: 400мм", height: 20, width: 85});
+    $('#lineWeight').on('change', function(){
+        if(this.value == "") self.lineWeight = 10 
+            else if( parseFloat(this.value) > 1000 || parseFloat(this.value) < 120 ) alert("Недопустимая ширина стены")
+                else self.lineWeight = parseFloat(this.value)/40;
+    })
+    // 
+    $('#deep').jqxInput({placeHolder: "Высота: 2м", height: 20, width: 85});
+    $('#deep').on('change', function(){
+        if(this.value == "") self.deep = 2 
+            else if( parseFloat(this.value) > 7000 || parseFloat(this.value) < 120 ) alert("Недопустимая ширина стены")
+                else self.deep = parseFloat(this.value);
+    })
 }
