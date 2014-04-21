@@ -13,6 +13,7 @@ body{
 	font-family: 'Open Sans';
 }
 .tn {transition:all .5s ease; -webkit-transition:all .5s ease}
+.cp {cursor:pointer}
 #main{
 	/*background: #fafafa;*/
 	position: relative;
@@ -111,6 +112,11 @@ body{
 			.selected{
 				box-shadow: 0 0 0px rgba(0,0,0,0.5);	
 			}
+			.form {height: 30px}
+				.form label{
+					width: 80px; 
+					display: inline-block;
+				}
 
 	#footer{
 		position: absolute;
