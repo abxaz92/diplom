@@ -32,6 +32,7 @@ function Painter(container){
     this.stage.add(this.layer);
     this.delete = false;
 }
+
 Painter.prototype.bindEvents = function(){
     var self = this;
     this.background.on("mousedown", function(){

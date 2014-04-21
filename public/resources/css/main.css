@@ -121,6 +121,15 @@ body{
 					width: 80px; 
 					display: inline-block;
 				}
+			#toggle{
+				width: 600px;
+				height: 21px;
+				background-color: rgba(158, 158, 158, 0.75);
+			}
+			.toggle span{
+				margin: 250px;
+				margin-bottom: 1px;
+			}
 
 	#footer{
 		position: absolute;
