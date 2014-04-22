@@ -36,6 +36,10 @@
     </div>
 </div>
 
+        <div id="resultWindow">
+            <div>Результат</div>
+            <div id="resultContainer"></div>
+        </div>
 
 <script defer="defer">
    var  painter = new Painter("container");
@@ -91,6 +95,7 @@
         ,{name:"М-300", id:"320"}
     ];
     $("#marka").jqxDropDownList({source: source, displayMember: "name", valueMember: "id", selectedIndex: 2, width: '100', height: '30', autoDropDownHeight: true, theme: "metro"});
+    $("#resultWindow").jqxWindow({ width: 400, height: 200, isModal: true, autoOpen: false });
     $("#calculate").jqxButton({ width: '150', height:'25'});
     $("#calculate").on('click', function () {
         var stage = painter.getStage();
@@ -111,9 +116,15 @@
         var heig = painter.getDeep();
         var marka = $('#marka').val();
         console.log({width:width, heig:heig, heigh:0, shir:shir, marka:marka});
-        dpd.basemodule.get({width:width, heig:heig, heigh:0, shir:shir, marka:marka}, function(res, e){
+        dpd.basemodule.get({width:width, heig:heig, heigh:0.5, shir:shir, marka:marka}, function(res, e){
             console.log(res, e);
+            $('#resultWindow').jqxWindow('open');
+            $("#resultContainer").empty();
+            $("#resultContainer").append('<p align=left> Количество бетона '+res.betonCol+' м3  </p> <p align=left> ('+res.cement+' кг  цемента,  '+res.pesok+' тонн песка  и  '+res.sheben+' тонн щебня)</p>  <p align=left>Арматуры '+res.arm+' метр(а)(ов).</p>  <p align=left>  Доски для опалубки (толщина 25 мм.) '+res.doska+' м3</p>');
         });
     });
+    
+
+    
 </script>
 
