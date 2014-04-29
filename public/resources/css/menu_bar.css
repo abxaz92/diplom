@@ -1,8 +1,8 @@
 body { 
-	background: #EEE; 
-  /*background-repeat:  repeat-y;
+	/*background: #EEE; */
+  background-repeat:  repeat-y;
   background-image: url("../img/background1.jpg");
-  background-size: cover;*/
+  background-size: cover;
 	overflow-x:hidden;
 }
 .clearfix:before,

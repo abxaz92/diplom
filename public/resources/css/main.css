@@ -82,6 +82,7 @@ body{
 						/*.nav ul li a:hover {padding-left: 20px; border-color: #0075b1}*/
 
 	#content{
+		background: #EEE;
 		position: absolute;
 		top: 150px;
 		left: auto;
