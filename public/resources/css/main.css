@@ -7,9 +7,9 @@
 * {margin: 0; padding: 0;}
 html,body{height:100%}
 body{
-	background-repeat:  repeat-y;
+/*	background-repeat:  repeat-y;
 	background-image: url("../img/background1.jpg");
-	background-size: cover;
+	background-size: cover;*/
 	font-family: 'Open Sans';
 }
 .tn {transition:all .5s ease; -webkit-transition:all .5s ease}

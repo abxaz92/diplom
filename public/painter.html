@@ -4,127 +4,39 @@
 </div>
 <div id="painter">
     <div class="canvas" id="container"></div>
-    <div class="palete">
+    <div class="palete" id="palete">
         <div class="paleteBtns">
             <img id="delete" class="unselected cp" src="resources/img/buttons/delete.png" width="20" height="20" border="0" alt="javascript button">
             <img id="line" class="unselected cp" src="resources/img/buttons/line.png" width="20" height="20" border="0" alt="javascript button">
             <img id="rect" class="unselected cp" src="resources/img/buttons/rect.png" width="20" height="20" border="0" alt="javascript button">
         </div>
         <input type="text" id="lineWeight"/>
-        <input type="text" id="deep"/>
-        <!-- Окна для добавления примитивов -->
-        <div id="windowLine">
-            <div>Линия</div>
-            <div >
-                <div class="form"> <label>Длина</label> <input type="text" id="lineLength"/></div>
-                <div class="form"> <label>Угол</label> <input type="text" id="lineAngle"/></div>
-                <input type="button" value="Добавить" id='addLine'/>
-            </div>
-        </div>
-        <div id="windowRect">
-            <div>Прямоугольник</div>
-            <div >
-                <div class="form"> <label>Длина</label> <input type="text" id="rectHeight"/></div>
-                <div class="form"> <label>Ширина</label> <input type="text" id="rectWidth"/></div>
-                <input type="button" value="Добавить" id='addRect'/>
-            </div>
-        </div>
     </div>
-    <div>
-        <input type="button" value="Расчитать" id='calculate' />
-        <div id="marka" class="inln"></div>
+</div>
+    
+<div id="windowRect">
+    <div>Прямоугольник</div>
+    <div >
+        <div class="form"> <label>Длина</label> <input type="text" id="rectHeight"/></div>
+        <div class="form"> <label>Ширина</label> <input type="text" id="rectWidth"/></div>
+        <input type="button" value="Добавить" id='addRect'/>
+    </div>
+</div>
+<div id="windowLine">
+    <div>Линия</div>
+    <div >
+        <div class="form"> <label>Длина</label> <input type="text" id="lineLength"/></div>
+        <div class="form"> <label>Угол</label> <input type="text" id="lineAngle"/></div>
+        <input type="button" value="Добавить" id='addLine'/>
     </div>
 </div>
 
-        <div id="resultWindow">
-            <div>Результат</div>
-            <div id="resultContainer"></div>
-        </div>
+<div id="resultWindow">
+    <div>Результат</div>
+    <div id="resultContainer"></div>
+</div>
 
 <script defer="defer">
    var  painter = new Painter("container");
-        painter.bindEvents();
-        painter.initPalete();
-
-    var isPainter = true;
-   // 
-    $('#line').bind("click",function(){
-        $('#windowLine').jqxWindow('open');
-    })
-    $('#lineLength').jqxInput({placeHolder: "10", height: 25, width: 200});
-    $('#lineAngle').jqxInput({placeHolder: "0", height: 25, width: 200});
-    $("#addLine").jqxButton({ width: '150'});
-    $("#addLine").on('click', function () {
-        var length = $('#lineLength').val();
-        var angle = $('#lineAngle').val();
-        if(length == "") length = 10;
-        if(angle == "") angle = 0;
-        painter.addLine(length * 16 , parseFloat(angle));
-        $("#windowLine").jqxWindow('close');
-    });
-    $("#windowLine").jqxWindow({ width: 300, height: 130, isModal: true, autoOpen: false });
- 
- // 
-    $('#rect').bind("click",function(){
-        $('#windowRect').jqxWindow('open');
-    })
-    $('#rectHeight').jqxInput({placeHolder: "10", height: 25, width: 200});
-    $('#rectWidth').jqxInput({placeHolder: "10", height: 25, width: 200});
-    $("#addRect").jqxButton({ width: '150'});
-    $("#addRect").on('click', function () {
-        var height = $('#rectHeight').val();
-        var width = $('#rectWidth').val();
-        if(height == "") height = 10;
-        if(width == "") width = 10;
-        painter.addRect(height * 16 , width*16);
-        $("#windowRect").jqxWindow('close');
-    });
-    $("#windowRect").jqxWindow({ width: 300, height: 130, isModal: true, autoOpen: false });
-
-    $("#toggle").bind("click",function(){
-        $('#painter').toggle('slow');
-        isPainter = (isPainter) ? false : true
-    });
-
-    
-    var source = [
-         {name:"М-100", id:"170"}
-        ,{name:"М-150", id:"200"}
-        ,{name:"М-200", id:"240"}
-        ,{name:"М-250", id:"300"}
-        ,{name:"М-300", id:"320"}
-    ];
-    $("#marka").jqxDropDownList({source: source, displayMember: "name", valueMember: "id", selectedIndex: 2, width: '100', height: '30', autoDropDownHeight: true, theme: "metro"});
-    $("#resultWindow").jqxWindow({ width: 400, height: 200, isModal: true, autoOpen: false });
-    $("#calculate").jqxButton({ width: '150', height:'25'});
-    $("#calculate").on('click', function () {
-        var stage = painter.getStage();
-        var nodes = stage.find(".name");
-        var width = 0;
-        for(var i in nodes){
-            if(nodes[i].className == "Line"){
-                var points = nodes[i].points()
-                width += Math.round(Math.sqrt( Math.pow(points[2] - points[0],2)  + Math.pow(points[3] - points[1],2))/16);
-            }
-            if(nodes[i].className == "Rect"){
-                var w = Math.round(nodes[i].getWidth()/16);
-                var h = Math.round(nodes[i].getHeight()/16);
-                width += 2*(h+w);
-            }
-        }
-        var shir = painter.getLineWeight()/1000;
-        var heig = painter.getDeep();
-        var marka = $('#marka').val();
-        console.log({width:width, heig:heig, heigh:0, shir:shir, marka:marka});
-        dpd.basemodule.get({width:width, heig:heig, heigh:0.5, shir:shir, marka:marka}, function(res, e){
-            console.log(res, e);
-            $('#resultWindow').jqxWindow('open');
-            $("#resultContainer").empty();
-            $("#resultContainer").append('<p align=left> Количество бетона '+res.betonCol+' м3  </p> <p align=left> ('+res.cement+' кг  цемента,  '+res.pesok+' тонн песка  и  '+res.sheben+' тонн щебня)</p>  <p align=left>Арматуры '+res.arm+' метр(а)(ов).</p>  <p align=left>  Доски для опалубки (толщина 25 мм.) '+res.doska+' м3</p>');
-        });
-    });
-    
-
-    
 </script>
 

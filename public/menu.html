@@ -1,16 +1,69 @@
-<div class="nav">
+<!-- <div class="nav">
 	<ul>
 	<li><a class="tn" id="home" href="#">Главная</a></li>
 	<li><a class="tn" id="bases" href="#">Фундамент</a></li>
-	<li><a class="tn" href="#">Стены</a></li>
 	<li><a class="tn" href="#">Справка</a></li>
 	</ul>
+</div> -->
+
+<div class="container">
+<nav>
+		<ul class="mcd-menu">
+			<li>
+				<a id="home" href="#">
+					<i class="fa fa-home"></i>
+					<strong>Главная</strong>
+					<small>sweet home</small>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<i class="fa fa-comments-o"></i>
+					<strong>Фундамент</strong>
+					<small>возведение фундамента</small>
+				</a>
+				<ul>
+					<li><a id="base_sost" href="#"><i class="fa fa-globe"></i>Состав бетона</a></li>
+					<li><a href="#"><i class="fa fa-trophy"></i>Количество блоков</a></li>
+				</ul>
+			</li>
+			<li>
+				<a href="#">
+					<i class="fa fa-comments-o"></i>
+					<strong>Стены</strong>
+					<small>возведение стен</small>
+				</a>
+				<ul>
+					<li><a id="brick_calc" href="#"><i class="fa fa-globe"></i>Расход кирпича</a></li>
+					<li><a href="#"><i class="fa fa-trophy"></i>Расход блоков</a></li>
+				</ul>
+			</li>
+<!-- 			<li>
+				<a href="">
+					<i class="fa fa-picture-o"></i>
+					<strong>Portfolio</strong>
+					<small>sweet home</small>
+				</a>
+			</li> -->
+			<li>
+				<a href="#">
+					<i class="fa fa-envelope-o"></i>
+					<strong>Справка</strong>
+				</a>
+			</li>
+		</ul>
+	</nav>
 </div>
+
 <script>
 	// $("#content" ).load("home.html");
-	$('#bases').bind("click",function(){
+	$('#base_sost').bind("click",function(){
 		$( "#content" ).empty();
-		$( "#content" ).load("painter.html");
+		$( "#content" ).load("base_sost.html");
+	});	
+	$('#brick_calc').bind("click",function(){
+		$( "#content" ).empty();
+		$( "#content" ).load("brick_calc.html");
 	});
 	$('#home').bind("click",function(){
 		$( "#content" ).empty();
