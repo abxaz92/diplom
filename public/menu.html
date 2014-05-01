@@ -57,16 +57,8 @@
 
 <script>
 	// $("#content" ).load("home.html");
-	$('#base_sost').bind("click",function(){
-		$( "#content" ).empty();
-		$( "#content" ).load("base_sost.html");
-	});	
-	$('#brick_calc').bind("click",function(){
-		$( "#content" ).empty();
-		$( "#content" ).load("brick_calc.html");
-	});
-	$('#home').bind("click",function(){
-		$( "#content" ).empty();
-		$( "#content" ).load("home.html");
-	});
+	$('#base_sost').bind("click",function(){ 	loadToContent("base_sost.html"); });	
+	$('#brick_calc').bind("click",function(){ 	loadToContent("brick_calc.html");	});
+	$('#home').bind("click",function(){			loadToContent("home.html"); });
+
 </script>

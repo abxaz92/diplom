@@ -28,12 +28,16 @@
 	</div>
 
 <script defer="defer">
-$( "#content" ).load("home.html");
-// $( "#content" ).load("base_sost.html");
+// $( "#content" ).load("home.html");
+$( "#content" ).load("brick_calc.html");
 
 $( "#footer" ).load("footer.html");
 $( "#menu" ).load("menu.html");
 
+function loadToContent(page){
+	$( "#content" ).empty();
+	$( "#content" ).load(page);
+}
 	
 </script>
 </body>

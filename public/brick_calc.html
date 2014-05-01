@@ -1,0 +1,68 @@
+<script defer="defer">
+$( "#content" ).load("painter.html", function(){
+    prepare();
+});
+
+function prepare(){
+    $('#lineWeight').hide();
+    $('#content').append('<div id="window_type"><div>Размер кирпича и кладки</div><div ><div id="type" class=""></div></div></div>');
+    $("#window_type").jqxWindow({ width: 500, height: 130, isModal: true, autoOpen: false });
+    
+    $('#palete').append(
+        '<img id="brick" class="unselected cp" src="resources/img/bricks/1.gif" width="90" height="55" border="0" alt="javascript button">'
+        +'<input type="text" id="deep"/>'
+        +'<input type="button" value="Расчитать" id="calculate" />');
+    $('#deep').jqxInput({placeHolder: "Высота: 3м", height: 20, width: 90});
+    
+    var source = [{img: 1, id:"56.50", name:"Кирпич одинарный, кладка в 0,5 кирпича, толщина стен - 120 мм"}
+        ,{img: 2, id:"114.3", name:"Кирпич одинарный, кладка в 1 кирпич, толщина стен - 250 мм"}
+        ,{img: 3, id:"170.8", name:"Кирпич одинарный, кладка в 1,5 кирпича, толщина стен - 380 мм"}
+        ,{img: 4, id:"228.6", name:"Кирпич одинарный, кладка в 2 кирпича, толщина стен - 510 мм"}
+        ,{img: 5, id:"285.1", name:"Кирпич одинарный, кладка в 2,5 кирпича, толщина стен - 640 мм"}
+        ,{img: 1, id:"42.16", name:"Кирпич полуторный, кладка в 0,5 кирпича, толщина стен - 120 мм"}
+        ,{img: 2, id:"86.10", name:"Кирпич полуторный, кладка в 1 кирпич, толщина стен - 250 мм"}
+        ,{img: 3, id:"128.3", name:"Кирпич полуторный, кладка в 1,5 кирпича, толщина стен - 380 мм"}
+        ,{img: 4, id:"172.2", name:"Кирпич полуторный, кладка в 2 кирпича, толщина стен - 510 мм"}
+        ,{img: 5, id:"214.4", name:"Кирпич полуторный, кладка в 2,5 кирпича, толщина стен - 640 мм"}
+        ,{img: 1, id:"27.10", name:"Камень двойной, кладка в 0,5 кирпича, толщина стен - 120 мм"}
+        ,{img: 2, id:"55.20", name:"Камень двойной, кладка в 1 кирпич, толщина стен - 250 мм"}
+        ,{img: 3, id:"82.30", name:"Камень двойной, кладка в 1,5 кирпича, толщина стен - 380 мм"}
+        ,{img: 4, id:"110.4", name:"Камень двойной, кладка в 2 кирпича, толщина стен - 510 мм"}
+        ,{img: 5, id:"137.5", name:"Камень двойной, кладка в 2,5 кирпича, толщина стен - 640 мм"}
+    ];
+
+    $('#window_type').on('select', function (event){
+        var args = event.args;
+        if (args) {
+            var img = args.item.originalItem.img;
+            $('#brick').attr("src", "resources/img/bricks/"+img+".gif");
+            $('#window_type').jqxWindow('close');
+        }                        
+    });
+    $('#brick').bind("click",function(){
+        $('#window_type').jqxWindow('open');
+    })
+
+
+    $("#type").jqxDropDownList({source: source, displayMember: "name", valueMember: "id", selectedIndex: 0, width: '420', height: '20', autoDropDownHeight: true, theme: "metro"});
+    $("#calculate").jqxButton({ width: '90', height:'25'});
+    $("#calculate").on('click', function () {
+        var perimeter = painter.getPrimeter();
+        var deepVal = $("#deep").val(); 
+        var height = (deepVal == "") ? 3 : deepVal;
+        var square = perimeter * height;
+        var type = $('#type').val();
+
+        dpd.brickmodule.get({type:type, square:square}, function(r,e){
+            console.log(r,e)
+            $('#resultWindow').jqxWindow('open');
+            $("#resultContainer").empty();
+            $("#resultContainer").append('<p align=left> Расход кирпича '+r.bricks+' шт  </p> <p align=left>Расход раствора '+r.rastv+' м3</p>');
+        });
+    });
+    
+}
+
+    
+</script>
+

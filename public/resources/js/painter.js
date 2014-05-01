@@ -163,13 +163,7 @@ Painter.prototype.initPalete = function(){
             else if( parseFloat(this.value) > 1000 || parseFloat(this.value) < 120 ) alert("Недопустимая ширина стены")
                 else self.lineWeight = parseFloat(this.value)/20;
     })
-    // 
-    // $('#deep').jqxInput({placeHolder: "Высота: 2м", height: 20, width: 85});
-    // $('#deep').on('change', function(){
-    //     if(this.value == "") self.deep = 2 
-    //         else if( parseFloat(this.value) > 7 || parseFloat(this.value) < 0.12 ) alert("Недопустимая ширина стены")
-    //             else self.deep = parseFloat(this.value);
-    // })
+    
     var isPainter = true;
     $('#line').bind("click",function(){
         $('#windowLine').jqxWindow('open');
@@ -214,6 +208,22 @@ Painter.prototype.initPalete = function(){
     return this;
 }
 
+Painter.prototype.getPrimeter = function(){
+    var nodes = this.stage.find(".name");
+    var width = 0;
+    for(var i in nodes){
+        if(nodes[i].className == "Line"){
+            var points = nodes[i].points()
+            width += Math.round(Math.sqrt( Math.pow(points[2] - points[0],2)  + Math.pow(points[3] - points[1],2))/16);
+        }
+        if(nodes[i].className == "Rect"){
+            var w = Math.round(nodes[i].getWidth()/16);
+            var h = Math.round(nodes[i].getHeight()/16);
+            width += 2*(h+w);
+        }
+    }
+    return width;
+}
 Painter.prototype.getStage = function(){return this.stage}
 Painter.prototype.getLineWeight = function(){return this.lineWeight*20}
 Painter.prototype.getDeep = function(){return this.deep}
