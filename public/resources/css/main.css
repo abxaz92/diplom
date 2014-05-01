@@ -15,6 +15,8 @@ body{
 .tn {transition:all .5s ease; -webkit-transition:all .5s ease}
 .cp {cursor:pointer}
 .inln {display: inline-block;}
+.right{float: right;}
+.left{float: left;}
 #main{
 	/*background: #fafafa;*/
 	position: relative;
