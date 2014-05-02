@@ -1,0 +1,45 @@
+<script defer="defer">
+$( "#content" ).load("painter.html", function(){
+    prepare();
+});
+
+function prepare(){
+    $('#lineWeight').hide();
+    $('#content').append('<div id="window_type"><div>Размер кирпича и кладки</div><div ><div id="type" class=""></div></div></div>');
+    $("#window_type").jqxWindow({ width: 500, height: 130, isModal: true, autoOpen: false });
+    
+    $('#palete').append(
+        '<input type="text" id="deep"/>'
+        +'<input type="text" id="height"/>'
+        +'<input type="button" value="Расчитать" id="calculate" />');
+    $('#deep').jqxInput({placeHolder: "Высота: 3м", height: 20, width: 90});
+    $('#height').jqxInput({placeHolder: "Толщ: 200мм", height: 20, width: 90});
+    
+    
+    
+
+
+    
+    $("#calculate").jqxButton({ width: '90', height:'25'});
+    $("#calculate").on('click', function () {
+        var square = painter.getFloorSquare();
+        var deepVal = $("#deep").val(); 
+        var deep = (deepVal == "") ? 3 : deepVal;
+        var heightVal = $("#height").val();
+        var height = (heightVal == "") ? 200 : heightVal;
+        dpd.floorwood.get({ploshady:square,tolshina:height, visota:deep}, function(r,e){
+            console.log(r,e)
+            $('#resultWindow').jqxWindow('open');
+            $("#resultContainer").empty();
+            $("#resultContainer").append('<p align=left> Стойки '+r.stoyki+' шт  </p>'
+                + '<p align=left> Унивилки '+r.univilki+' шт  </p>'
+                + '<p align=left> Треноги '+r.trenogi+' шт  </p>'
+                + '<p align=left>Балка '+r.balki+' м.п.</p>');
+        });
+    });
+    
+}
+
+    
+</script>
+
