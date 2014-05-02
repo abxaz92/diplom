@@ -144,6 +144,29 @@ Painter.prototype.addLine = function(length, angle){
     this.layer.add(line);
     this.layer.draw();
 }
+Painter.prototype.addFloor = function(width, height){
+    var self = this;
+    var rect = new Kinetic.Rect({
+        x: 80,
+        y: 80,
+        width: width,
+        height: height,
+        stroke: "grey",
+        fill: 'grey',
+        strokeWidth: this.lineWeight,
+        draggable: true,
+        name : "floor"
+    });
+    rect.on('click', function() {
+        var shape = this.attrs.id;
+        rect.destroy(shape);
+        self.delete && this.remove();
+        self.layer.drawScene();
+    });
+    this.writeMessage("Ширина: " + width/16+"м" + "  Длина: " + height/16+"м");
+    this.layer.add(rect);
+    this.layer.draw();
+}
 Painter.prototype.initPalete = function(){
     var self = this;
     $('#delete').bind("click",function(){
@@ -167,7 +190,14 @@ Painter.prototype.initPalete = function(){
     var isPainter = true;
     $('#line').bind("click",function(){
         $('#windowLine').jqxWindow('open');
+    })    
+    $('#floor').bind("click",function(){
+        $('#windowFloor').jqxWindow('open');
     })
+    $('#rect').bind("click",function(){
+        $('#windowRect').jqxWindow('open');
+    })
+
     $('#lineLength').jqxInput({placeHolder: "10", height: 25, width: 200});
     $('#lineAngle').jqxInput({placeHolder: "0", height: 25, width: 200});
     $("#addLine").jqxButton({ width: '150'});
@@ -182,9 +212,6 @@ Painter.prototype.initPalete = function(){
     $("#windowLine").jqxWindow({ width: 300, height: 130, isModal: true, autoOpen: false });
  
  // 
-    $('#rect').bind("click",function(){
-        $('#windowRect').jqxWindow('open');
-    })
     $('#rectHeight').jqxInput({placeHolder: "10", height: 25, width: 200});
     $('#rectWidth').jqxInput({placeHolder: "10", height: 25, width: 200});
     $("#addRect").jqxButton({ width: '150'});
@@ -197,7 +224,19 @@ Painter.prototype.initPalete = function(){
         $("#windowRect").jqxWindow('close');
     });
     $("#windowRect").jqxWindow({ width: 300, height: 130, isModal: true, autoOpen: false });
-
+    $("#windowFloor").jqxWindow({ width: 300, height: 130, isModal: true, autoOpen: false });
+    $("#addFloor").on('click', function () {
+        var height = $('#floorHeight').val();
+        var width = $('#floorWidth').val();
+        if(height == "") height = 10;
+        if(width == "") width = 10;
+        painter.addFloor(height * 16 , width*16);
+        $("#windowFloor").jqxWindow('close');
+    });
+    $('#floorHeight').jqxInput({placeHolder: "10", height: 25, width: 200});
+    $('#floorWidth').jqxInput({placeHolder: "10", height: 25, width: 200});
+    $("#addFloor").jqxButton({ width: '150'});
+    
     $("#toggle").bind("click",function(){
         $('#painter').toggle('slow');
         isPainter = (isPainter) ? false : true
@@ -223,6 +262,18 @@ Painter.prototype.getPrimeter = function(){
         }
     }
     return width;
+}
+Painter.prototype.getFloorSquare = function(){
+    var nodes = this.stage.find(".floor");
+    var square = 0;
+    for(var i in nodes){
+        if(nodes[i].className == "Rect"){
+            var w = Math.round(nodes[i].getWidth()/16);
+            var h = Math.round(nodes[i].getHeight()/16);
+            square += (h*w);
+        }
+    }
+    return square;
 }
 Painter.prototype.getStage = function(){return this.stage}
 Painter.prototype.getLineWeight = function(){return this.lineWeight*20}
