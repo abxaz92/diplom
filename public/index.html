@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="ru">
 <head>
  	<title>Смета</title>
 	<link rel="stylesheet" href="resources/css/main.css">
@@ -23,19 +23,19 @@
     <script type="text/javascript" src="resources/js/aliens/jqwidgets/jqxpanel.js"></script>
     <script type="text/javascript" src="resources/js/aliens/jqwidgets/jqxtabs.js"></script>
 <style type="text/css">
-@-moz-document url-prefix() {
-    .example {
-	    /*margin-left: -5px;*/
-	    width: 1000px;
-	    margin-left: auto ;
-	  	margin-right: auto ;
-	    position:relative;
-	    height:382px;
-	    padding:15px;
-	    -moz-border-radius:3px;
-	    -webkit-border-radius:3px;
+	@media print {
+	  body * {
+	    visibility: hidden;
+	  }
+	  #resultContainer, #resultContainer * {
+	    visibility: visible;
+	  }
+	  #resultContainer {
+	    position: absolute;
+	    left: 0;
+	    top: 0;
+	  }
 	}
-}
 </style>
 
 </head>
@@ -61,7 +61,6 @@ function loadToContent(page){
 	$( "#content" ).empty();
 	$( "#content" ).load(page);
 }
-	
 </script>
 </body>
 </html>

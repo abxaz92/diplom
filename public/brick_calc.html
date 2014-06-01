@@ -60,7 +60,8 @@ function prepare(){
                  callback: function(image) {
                     $('#resultWindow').jqxWindow('open');
                     $("#resultContainer").empty();
-                    $("#resultContainer").append(''
+                    $("#resultContainer").append('');
+                    $("#resultContainer").append('<input type="button" value="Печать" id="print"/>'
                         +'<table style="margin: auto; font-size: 12pt;">'
                         +    '<tbody>'
                         +        '<tr>'
@@ -74,6 +75,9 @@ function prepare(){
                         +    '</tbody>'
                         +'</table>'
                     );
+                    $("#print").bind("click",function(){
+                        window.print();
+                    })
                     $("#resultContainer").append(image);
                  }
             });
