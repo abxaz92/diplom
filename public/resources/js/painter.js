@@ -196,17 +196,42 @@ Painter.prototype.addFloor = function(width, height){
         stroke: "grey",
         fill: 'grey',
         strokeWidth: this.lineWeight,
-        draggable: true,
         name : "floor"
     });
-    rect.on('click', function() {
+    var widthText = new Kinetic.Text({
+        x: (135 + width)/2,
+        y: 75,
+        text: width/16,
+        fontSize: 14,
+        fontFamily: 'Calibri',
+        width: 20,
+        align: 'center',    
+        fill: 'black'
+    });
+    var heightText = new Kinetic.Text({
+        x: 70,
+        y: (135 + height)/2,
+        text: height/16,
+        fontSize: 14,
+        fontFamily: 'Calibri',
+        width: 20,
+        align: 'center',    
+        fill: 'black'
+    });    
+    var tmpLayer = new Kinetic.Layer({
+        draggable: true
+    });
+    tmpLayer.on('click', function() {
         var shape = this.attrs.id;
-        rect.destroy(shape);
+        tmpLayer.destroy(shape);
         self.delete && this.remove();
         self.layer.drawScene();
     });
     this.writeMessage("Ширина: " + width/16+"м" + "  Длина: " + height/16+"м");
-    this.layer.add(rect);
+    tmpLayer.add(rect);
+        tmpLayer.add(widthText);
+            tmpLayer.add(heightText);
+    this.stage.add(tmpLayer);
     this.layer.draw();
 }
 Painter.prototype.initPalete = function(){
@@ -284,7 +309,7 @@ Painter.prototype.initPalete = function(){
         isPainter = (isPainter) ? false : true
     });
 
-    $("#resultWindow").jqxWindow({ width: 400, height: 200, isModal: true, autoOpen: false });
+    $("#resultWindow").jqxWindow({ width: 605, height: 600, isModal: true, autoOpen: false });
 
     return this;
 }

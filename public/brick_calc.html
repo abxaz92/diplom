@@ -55,9 +55,28 @@ function prepare(){
 
         dpd.brickmodule.get({type:type, square:square}, function(r,e){
             console.log(r,e)
-            $('#resultWindow').jqxWindow('open');
-            $("#resultContainer").empty();
-            $("#resultContainer").append('<p align=left> Расход кирпича '+r.bricks+' шт  </p> <p align=left>Расход раствора '+r.rastv+' м3</p>');
+            painter.writeMessage('');
+            painter.stage.toImage({
+                 callback: function(image) {
+                    $('#resultWindow').jqxWindow('open');
+                    $("#resultContainer").empty();
+                    $("#resultContainer").append(''
+                        +'<table style="margin: auto; font-size: 12pt;">'
+                        +    '<tbody>'
+                        +        '<tr>'
+                        +            '<td style="width: 200px;">Расход кирпича</td>'
+                        +            '<td>'+r.bricks+' шт</td>'
+                        +        '</tr>'
+                        +        '<tr>'
+                        +            '<td>Расход раствора</td>'
+                        +            '<td>'+r.rastv+' м3</td>'
+                        +        '</tr>'
+                        +    '</tbody>'
+                        +'</table>'
+                    );
+                    $("#resultContainer").append(image);
+                 }
+            });
         });
     });
     
