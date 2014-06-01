@@ -104,17 +104,42 @@ Painter.prototype.addRect = function(width, height){
         height: height,
         stroke: "red",
         strokeWidth: this.lineWeight,
-        draggable: true,
         name : "name"
     });
-    rect.on('click', function() {
+    var tmpLayer = new Kinetic.Layer({
+        draggable: true
+    });
+    tmpLayer.on('click', function() {
         var shape = this.attrs.id;
-        rect.destroy(shape);
+        tmpLayer.destroy(shape);
         self.delete && this.remove();
         self.layer.drawScene();
     });
+    var widthText = new Kinetic.Text({
+        x: (135 + width)/2,
+        y: 75,
+        text: width/16,
+        fontSize: 14,
+        fontFamily: 'Calibri',
+        width: 20,
+        align: 'center',    
+        fill: 'black'
+    });
+    var heightText = new Kinetic.Text({
+        x: 70,
+        y: (135 + height)/2,
+        text: height/16,
+        fontSize: 14,
+        fontFamily: 'Calibri',
+        width: 20,
+        align: 'center',    
+        fill: 'black'
+    });
     this.writeMessage("Ширина: " + width/16+"м" + "  Длина: " + height/16+"м");
-    this.layer.add(rect);
+    tmpLayer.add(rect);
+        tmpLayer.add(widthText);
+            tmpLayer.add(heightText);
+    this.stage.add(tmpLayer);
     this.layer.draw();
     console.log(this.layer.find("Rect"));
 }
@@ -126,22 +151,39 @@ Painter.prototype.addLine = function(length, angle){
          x : length * Math.sin(angle*Math.PI/180) + start.x
         ,y : length * Math.cos(angle*Math.PI/180) + start.y
     }
+    var tmpLayer = new Kinetic.Layer({
+        draggable: true
+    });
+    var dlina = Math.round(Math.sqrt( Math.pow(end.x - start.x,2)  + Math.pow(end.y - start.y,2))/16) + "  Угол:" + (angle-90);
+    var simpleText = new Kinetic.Text({
+        x: (start.x + end.x)/2 - 10,
+        y: (start.y + end.y)/2 - 8,
+        text: Math.round(Math.sqrt( Math.pow(end.x - start.x,2)  + Math.pow(end.y - start.y,2))/16),
+        fontSize: 14,
+        fontFamily: 'Calibri',
+        width: 20,
+        align: 'center',    
+        fill: 'black'
+    });
     var line = new Kinetic.Line({
         points: [start.x, start.y, end.x, end.y],
         stroke: "red",
         strokeWidth: this.lineWeight,
-        draggable: true,
+        // draggable: true,
         name : "name"
     });
 
-    line.on('click', function() {
+    tmpLayer.on('click', function() {
         var shape = this.attrs.id;
-        line.destroy(shape);
+        tmpLayer.destroy(shape);
         self.delete && this.remove();
         self.layer.drawScene();
     });
-    this.writeMessage("Длина : " + Math.round(Math.sqrt( Math.pow(end.x - start.x,2)  + Math.pow(end.y - start.y,2))/16) + "  Угол:" + (angle-90));
-    this.layer.add(line);
+    tmpLayer.add(line);
+        tmpLayer.add(simpleText);
+    this.writeMessage("Длина : " + dlina);
+    // this.layer.add(line);
+    this.stage.add(tmpLayer);
     this.layer.draw();
 }
 Painter.prototype.addFloor = function(width, height){
