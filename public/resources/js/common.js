@@ -1,9 +1,9 @@
 function main(){
-	// $( "#content" ).load("home.html");
+	$( "#content" ).load("home.html");
 	// $( "#content" ).load("brick_calc.html");
 	// $( "#content" ).load("base_sost.html");
 	// $( "#content" ).load("floor_wood.html");
-	$( "#content" ).load("block_calc.html");
+	// $( "#content" ).load("block_calc.html");
 	$( "#footer" ).load("footer.html");
 	$( "#menu" ).load("menu.html");
 }
