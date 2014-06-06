@@ -27,12 +27,16 @@ function prepare(){
     $("#calculate").jqxButton({ width: '90', height:'40'});
     $("#calculate").on('click', function () {
         var perimeter = painter.getPrimeter();
-        var deepVal = $("#deep").val(); 
+        var deepVal = $("#deep").val(); var tol_shva = $("#tolsh").val(); 
         var height = (deepVal == "") ? 3 : deepVal;
-        var square = perimeter * height;
+        if (tol_shva != "" && tol_shva.indexOf(',')){
+            tol_shva = tol_shva.replace(/,/g,'.');
+            tol_shva = parseFloat(tol_shva);
+        }
+        var tol_shva = (tol_shva == "") ? 0.01 : tol_shva;
         var type = $('#type').val();
 
-        dpd.brickmodule.get({type:type, square:square}, function(r,e){
+        dpd.blockmodule.get({bott:height, lenght:perimeter, tol_shva:tol_shva, brick:type}, function(r,e){
             console.log(r,e)
             painter.writeMessage('');
             painter.stage.toImage({
@@ -41,12 +45,12 @@ function prepare(){
                         +'<table style="margin: auto; font-size: 12pt;">'
                         +    '<tbody>'
                         +        '<tr>'
-                        +            '<td style="width: 200px;">Расход кирпича</td>'
-                        +            '<td>'+r.bricks+' шт</td>'
+                        +            '<td style="width: 200px;">Вид кладки</td>'
+                        +            '<td>'+r.name+'</td>'
                         +        '</tr>'
                         +        '<tr>'
-                        +            '<td>Расход раствора</td>'
-                        +            '<td>'+r.rastv+' м3</td>'
+                        +            '<td>Количество блоков</td>'
+                        +            '<td>'+r.col+' шт</td>'
                         +        '</tr>'
                         +    '</tbody>'
                         +'</table>', image
