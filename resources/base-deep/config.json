@@ -1,0 +1,29 @@
+{
+	"type": "Collection",
+	"properties": {
+		"city": {
+			"name": "city",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "city",
+			"order": 0
+		},
+		"glina": {
+			"name": "glina",
+			"type": "number",
+			"typeLabel": "number",
+			"required": false,
+			"id": "glina",
+			"order": 1
+		},
+		"supes": {
+			"name": "supes",
+			"type": "number",
+			"typeLabel": "number",
+			"required": false,
+			"id": "supes",
+			"order": 2
+		}
+	}
+}

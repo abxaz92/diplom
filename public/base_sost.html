@@ -5,10 +5,10 @@
 
 <script defer="defer">
 $( "#content" ).load("painter.html", function(){
-    prepare();
+    prepareForm();
 });
 
-function prepare(){
+var prepareForm = function(){
     $('#palete').append('<input type="text" id="deep"/>'
         +'<div id="marka" class="inln"></div>'
         +'<input type="button" value="Расчитать" id="calculate" />');
@@ -29,34 +29,33 @@ function prepare(){
 
     $("#marka").jqxDropDownList({source: source, displayMember: "name", valueMember: "id", selectedIndex: 2, width: '90', height: '20', autoDropDownHeight: true, theme: "metro"});
     $("#calculate").jqxButton({ width: '90', height:'25'});
-    $("#calculate").on('click', function () {
-        var stage = painter.getStage();
-        var nodes = stage.find(".name");
-        var width = 0;
-        for(var i in nodes){
-            if(nodes[i].className == "Line"){
-                var points = nodes[i].points()
-                width += Math.round(Math.sqrt( Math.pow(points[2] - points[0],2)  + Math.pow(points[3] - points[1],2))/16);
-            }
-            if(nodes[i].className == "Rect"){
-                var w = Math.round(nodes[i].getWidth()/16);
-                var h = Math.round(nodes[i].getHeight()/16);
-                width += 2*(h+w);
-            }
-        }
-        var shir = painter.getLineWeight()/1000;
-        var heig = painter.getDeep();
-        var marka = $('#marka').val();
-        dpd.basemodule.get({width:width, heig:heig, heigh:0.5, shir:shir, marka:marka}, function(res, e){
-            console.log(res, e);
-            $('#resultWindow').jqxWindow('open');
-            $("#resultContainer").empty();
-            $("#resultContainer").append('<p align=left> Количество бетона '+res.betonCol+' м3  </p> <p align=left> ('+res.cement+' кг  цемента,  '+res.pesok+' тонн песка  и  '+res.sheben+' тонн щебня)</p>  <p align=left>Арматуры '+res.arm+' метр(а)(ов).</p>  <p align=left>  Доски для опалубки (толщина 25 мм.) '+res.doska+' м3</p>');
-        });
-    });
-    
+    $("#calculate").on('click', function () { calc() });
 }
-
+var calc = function(){
+    var stage = painter.getStage();
+    var nodes = stage.find(".name");
+    var width = 0;
+    for(var i in nodes){
+        if(nodes[i].className == "Line"){
+            var points = nodes[i].points()
+            width += Math.round(Math.sqrt( Math.pow(points[2] - points[0],2)  + Math.pow(points[3] - points[1],2))/16);
+        }
+        if(nodes[i].className == "Rect"){
+            var w = Math.round(nodes[i].getWidth()/16);
+            var h = Math.round(nodes[i].getHeight()/16);
+            width += 2*(h+w);
+        }
+    }
+    var shir = painter.getLineWeight()/1000;
+    var heig = painter.getDeep();
+    var marka = $('#marka').val();
+    dpd.basemodule.get({width:width, heig:heig, heigh:0.5, shir:shir, marka:marka}, function(res, e){
+        console.log(res, e);
+        $('#resultWindow').jqxWindow('open');
+        $("#resultContainer").empty();
+        $("#resultContainer").append('<p align=left> Количество бетона '+res.betonCol+' м3  </p> <p align=left> ('+res.cement+' кг  цемента,  '+res.pesok+' тонн песка  и  '+res.sheben+' тонн щебня)</p>  <p align=left>Арматуры '+res.arm+' метр(а)(ов).</p>  <p align=left>  Доски для опалубки (толщина 25 мм.) '+res.doska+' м3</p>');
+    }); 
+}
     
 </script>
 

@@ -9,6 +9,7 @@
 	<script src="/dpd.js"></script>
 	<script src="resources/js/aliens/kinetic-v5.1.0.min.js"></script>
 	<script src="resources/js/painter.js"></script>
+    <script src="resources/js/common.js"></script>
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
     <script type="text/javascript" src="resources/js/aliens/jqwidgets/jqxcore.js"></script>
@@ -50,17 +51,6 @@
 		<div id="footer"></div>
 	</div>
 
-<script defer="defer">
-$( "#content" ).load("home.html");
-// $( "#content" ).load("brick_calc.html");
-
-$( "#footer" ).load("footer.html");
-$( "#menu" ).load("menu.html");
-
-function loadToContent(page){
-	$( "#content" ).empty();
-	$( "#content" ).load(page);
-}
-</script>
+<script defer="defer">main()</script>
 </body>
 </html>
