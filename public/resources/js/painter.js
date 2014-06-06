@@ -111,9 +111,11 @@ Painter.prototype.addRect = function(width, height){
     });
     tmpLayer.on('click', function() {
         var shape = this.attrs.id;
-        tmpLayer.destroy(shape);
-        self.delete && this.remove();
-        self.layer.drawScene();
+        if(self.delete){
+            tmpLayer.destroy(shape);
+            this.remove(); 
+            self.layer.drawScene();
+        } 
     });
     var widthText = new Kinetic.Text({
         x: (135 + width)/2,
@@ -175,9 +177,11 @@ Painter.prototype.addLine = function(length, angle){
 
     tmpLayer.on('click', function() {
         var shape = this.attrs.id;
-        tmpLayer.destroy(shape);
-        self.delete && this.remove();
-        self.layer.drawScene();
+        if(self.delete){
+            tmpLayer.destroy(shape);
+            this.remove(); 
+            self.layer.drawScene();
+        } 
     });
     tmpLayer.add(line);
         tmpLayer.add(simpleText);
@@ -223,9 +227,11 @@ Painter.prototype.addFloor = function(width, height){
     });
     tmpLayer.on('click', function() {
         var shape = this.attrs.id;
-        tmpLayer.destroy(shape);
-        self.delete && this.remove();
-        self.layer.drawScene();
+        if(self.delete){
+            tmpLayer.destroy(shape);
+            this.remove(); 
+            self.layer.drawScene();
+        } 
     });
     this.writeMessage("Ширина: " + width/16+"м" + "  Длина: " + height/16+"м");
     tmpLayer.add(rect);
@@ -247,7 +253,7 @@ Painter.prototype.initPalete = function(){
     });
 
     // 
-    $('#lineWeight').jqxInput({placeHolder: "Стена: 400мм", height: 20, width: 90});
+    $('#lineWeight').jqxInput({placeHolder: "Стена: 400мм", height: 30, width: 185});
     $('#lineWeight').on('change', function(){
         if(this.value == "") self.lineWeight = 10 
             else if( parseFloat(this.value) > 1000 || parseFloat(this.value) < 120 ) alert("Недопустимая ширина стены")
@@ -309,7 +315,7 @@ Painter.prototype.initPalete = function(){
         isPainter = (isPainter) ? false : true
     });
 
-    $("#resultWindow").jqxWindow({ width: 605, height: 600, isModal: true, autoOpen: false });
+    $("#resultWindow").jqxWindow({ width: 650, height: 700, isModal: true, autoOpen: false });
 
     return this;
 }

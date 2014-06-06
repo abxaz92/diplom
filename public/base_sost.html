@@ -2,23 +2,26 @@
     
 </div>
 
-
 <script defer="defer">
 $( "#content" ).load("painter.html", function(){
     prepareForm();
+    dpd.regions.get({name:1},function(data, err){
+        var source = [];
+        for(i in data) {
+            source.push(data[i].city);
+        }
+        $('#region').jqxInput({placeHolder: "Регион", height: 30, width: 185, source:source});
+    });
 });
 
 var prepareForm = function(){
-    $('#palete').append('<input type="text" id="deep"/>'
+    
+    toPalete('<input type="text" id="deep"/>'
+        +'<input type="text" id="region"/>'
+        +'<div id="grunt" class="inln"></div>'
         +'<div id="marka" class="inln"></div>'
-        +'<input type="button" value="Расчитать" id="calculate" />');
+        +'<div class="calculate"><input type="button" value="Расчитать" id="calculate" /></div>');
 
-    $('#deep').jqxInput({placeHolder: "Высота: 2м", height: 20, width: 90});
-    $('#deep').on('change', function(){
-        if(this.value == "") self.deep = 2 
-            else if( parseFloat(this.value) > 7 || parseFloat(this.value) < 0.12 ) alert("Недопустимая ширина стены")
-                else self.deep = parseFloat(this.value);
-    })
     var source = [
          {name:"М-100", id:"170"}
         ,{name:"М-150", id:"200"}
@@ -27,9 +30,35 @@ var prepareForm = function(){
         ,{name:"М-300", id:"320"}
     ];
 
-    $("#marka").jqxDropDownList({source: source, displayMember: "name", valueMember: "id", selectedIndex: 2, width: '90', height: '20', autoDropDownHeight: true, theme: "metro"});
-    $("#calculate").jqxButton({ width: '90', height:'25'});
+
+
+    $("#calculate").jqxButton({ width: '90', height:'40'});
+    $('#deep').jqxInput({placeHolder: "Высота: 2м", height: 30, width: 185});
+    $("#marka").jqxDropDownList({source: source
+        ,displayMember: "name"
+        ,valueMember: "id"
+        ,selectedIndex: 2
+        ,width: '185'
+        ,height: '30'
+        ,autoDropDownHeight: true
+        ,theme: "metro"
+    });      
+    $("#grunt").jqxDropDownList({source: [{name:"Глина,суглинки", id:"glina"},{name:"Пески,супеси", id:"supes"}]
+        ,displayMember: "name"
+        ,valueMember: "id"
+        ,selectedIndex: 0
+        ,width: '185'
+        ,height: '30'
+        ,autoDropDownHeight: true
+        ,theme: "metro"
+    });    
+
     $("#calculate").on('click', function () { calc() });
+    $('#deep').on('change', function(){
+        if(this.value == "") self.deep = 2 
+            else if( parseFloat(this.value) > 7 || parseFloat(this.value) < 0.12 ) alert("Недопустимая ширина стены")
+                else self.deep = parseFloat(this.value);
+    })
 }
 var calc = function(){
     var stage = painter.getStage();
@@ -49,12 +78,57 @@ var calc = function(){
     var shir = painter.getLineWeight()/1000;
     var heig = painter.getDeep();
     var marka = $('#marka').val();
-    dpd.basemodule.get({width:width, heig:heig, heigh:0.5, shir:shir, marka:marka}, function(res, e){
-        console.log(res, e);
-        $('#resultWindow').jqxWindow('open');
-        $("#resultContainer").empty();
-        $("#resultContainer").append('<p align=left> Количество бетона '+res.betonCol+' м3  </p> <p align=left> ('+res.cement+' кг  цемента,  '+res.pesok+' тонн песка  и  '+res.sheben+' тонн щебня)</p>  <p align=left>Арматуры '+res.arm+' метр(а)(ов).</p>  <p align=left>  Доски для опалубки (толщина 25 мм.) '+res.doska+' м3</p>');
-    }); 
+    console.log($('#region').val());
+    
+    dpd.regions.get({city : $('#region').val()}, function(data, err){
+        data = data[0];
+        var grunt = $('#grunt').val();
+        if (data && data[grunt]){
+            var heigh = data[grunt] / 100;
+            dpd.basemodule.get({width:width, heig:heig, heigh:heigh, shir:shir, marka:marka}, function(res, e){
+                console.log(res, e);
+                // showResult('<p align=left> Количество бетона '+res.betonCol+' м3  </p> <p align=left> ('+res.cement+' кг  цемента,  '+res.pesok+' тонн песка  и  '+res.sheben+' тонн щебня)</p>  <p align=left>Арматуры '+res.arm+' метр(а)(ов).</p>  <p align=left>  Доски для опалубки (толщина 25 мм.) '+res.doska+' м3</p>')
+                painter.writeMessage('');
+                painter.stage.toImage({
+                     callback: function(image) {
+                        showResult('<input type="button" value="Печать" id="print"/>'
+                            +'<table style="margin: auto; font-size: 12pt;">'
+                            +    '<tbody>'
+                            +        '<tr>'
+                            +            '<td style="width: 200px;">Бетона</td>'
+                            +            '<td>'+res.betonCol+' м3</td>'
+                            +        '</tr>'
+                            +        '<tr>'
+                            +            '<td style="width: 200px;">Цемент</td>'
+                            +            '<td>'+res.cement+' кг</td>'
+                            +        '</tr>'
+                            +        '<tr>'
+                            +            '<td style="width: 200px;">Песок </td>'
+                            +            '<td>'+res.pesok+' тонн</td>'
+                            +        '</tr>'
+                            +        '<tr>'
+                            +            '<td style="width: 200px;">Щебень</td>'
+                            +            '<td>'+res.sheben+' тонн</td>'
+                            +        '</tr>'
+                            +        '<tr>'
+                            +            '<td>Арматура</td>'
+                            +            '<td>'+res.arm+' м3</td>'
+                            +        '</tr>'
+                            +        '<tr>'
+                            +            '<td>Доска для опалубки (толщина 25 мм)</td>'
+                            +            '<td>'+res.doska+' м3</td>'
+                            +        '</tr>'
+                            +    '</tbody>'
+                            +'</table>', image
+                        );
+                        
+                     }
+                });
+            }); 
+        } else alert("Указанный вами регион отсутсвует в базе данных");
+        
+    });
+    
 }
     
 </script>

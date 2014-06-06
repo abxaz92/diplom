@@ -21,7 +21,7 @@ body{
 	/*background: #fafafa;*/
 	position: relative;
 	height: 850px;
-	width: 1000px;
+	width: 1100px;
 	margin: 0 auto;
 	box-shadow: 0 0 50px rgba(0,0,0,0.5);
 }
@@ -90,7 +90,7 @@ body{
 		left: auto;
 		right: 0;
 		bottom: 50px;
-		width: 750px;
+		width: 850px;
 		float: right;
 		/*background:#ffffff;*/
 		box-shadow: 0 0 3px rgba(0,0,0,0.5);
@@ -107,13 +107,19 @@ body{
 			padding-top: 30px;
 			padding-left: 10px;
 			padding-right: 10px;
-			width: 90px;
-			height: 200px;
+			width: 190px;
+			padding-bottom: 15px;
 			box-shadow: 0 0 5px rgba(0,0,0,0.5);
-		}
-			.paleteBtns{padding-left: 7px;}
+		}	
+			.calculate{
+				margin: auto;
+				width: 100px;
+			}
+			.paleteBtns{
+				width: 112px;
+				margin: auto;
+			}
 			.unselected{box-shadow: 0 0 20px rgba(0,0,0,0.5);}
-			.floor{margin-left: 25px;}
 			.selected{box-shadow: 0 0 0px rgba(0,0,0,0.5);	}
 			.form {height: 30px}
 				.form label{

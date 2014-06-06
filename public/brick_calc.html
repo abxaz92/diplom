@@ -58,10 +58,7 @@ function prepare(){
             painter.writeMessage('');
             painter.stage.toImage({
                  callback: function(image) {
-                    $('#resultWindow').jqxWindow('open');
-                    $("#resultContainer").empty();
-                    $("#resultContainer").append('');
-                    $("#resultContainer").append('<input type="button" value="Печать" id="print"/>'
+                    showResult('<input type="button" value="Печать" id="print"/>'
                         +'<table style="margin: auto; font-size: 12pt;">'
                         +    '<tbody>'
                         +        '<tr>'
@@ -73,12 +70,9 @@ function prepare(){
                         +            '<td>'+r.rastv+' м3</td>'
                         +        '</tr>'
                         +    '</tbody>'
-                        +'</table>'
+                        +'</table>', image
                     );
-                    $("#print").bind("click",function(){
-                        window.print();
-                    })
-                    $("#resultContainer").append(image);
+                    
                  }
             });
         });
