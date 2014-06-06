@@ -1,0 +1,64 @@
+<script defer="defer">
+$( "#content" ).load("painter.html", function(){
+    prepare();
+});
+
+function prepare(){
+    $('#lineWeight').hide();
+    $('#palete').append(
+        '<div id="window_type"><div ><div id="type" class=""></div></div></div>'
+        +'<input type="text" id="deep"/>'
+        +'<input type="text" id="tolsh"/>'
+        +'<div class="calculate"><input type="button" value="Расчитать" id="calculate" /></div>');
+    $('#deep').jqxInput({placeHolder: "Высота стен: 3м", height: 30, width: 185});
+    $('#tolsh').jqxInput({placeHolder: "Толщина шва: 0,01м", height: 30, width: 185});
+    
+    var source = [{id:"4", name:"Блок керамический поризованный 4,5NF"}
+        ,{id:"5", name:"Блок керамический поризованный 9 NF"}
+        ,{id:"6", name:"Блок керамический поризованный 10,7 NF"}
+        ,{id:"7", name:"Блок керамический поризованный 14,3 NF"}
+        ,{id:"11", name:"Блок газосиликатный 19*29*59"}
+        ,{id:"12", name:"Блок газосиликатный 20*29*59"}
+        ,{id:"13", name:"Блок газосиликатный 40*25*60"}
+    ];
+
+
+    $("#type").jqxDropDownList({source: source, displayMember: "name", valueMember: "id", selectedIndex: 0, width: '185', dropDownWidth: 300, height: '25', autoDropDownHeight: true, theme: "metro"});
+    $("#calculate").jqxButton({ width: '90', height:'40'});
+    $("#calculate").on('click', function () {
+        var perimeter = painter.getPrimeter();
+        var deepVal = $("#deep").val(); 
+        var height = (deepVal == "") ? 3 : deepVal;
+        var square = perimeter * height;
+        var type = $('#type').val();
+
+        dpd.brickmodule.get({type:type, square:square}, function(r,e){
+            console.log(r,e)
+            painter.writeMessage('');
+            painter.stage.toImage({
+                 callback: function(image) {
+                    showResult(''
+                        +'<table style="margin: auto; font-size: 12pt;">'
+                        +    '<tbody>'
+                        +        '<tr>'
+                        +            '<td style="width: 200px;">Расход кирпича</td>'
+                        +            '<td>'+r.bricks+' шт</td>'
+                        +        '</tr>'
+                        +        '<tr>'
+                        +            '<td>Расход раствора</td>'
+                        +            '<td>'+r.rastv+' м3</td>'
+                        +        '</tr>'
+                        +    '</tbody>'
+                        +'</table>', image
+                    );
+                    
+                 }
+            });
+        });
+    });
+    
+}
+
+    
+</script>
+
