@@ -22,3 +22,7 @@ function loadToContent(page){
 	$( "#content" ).load(page);
 }
 function toPalete(elems){ $('#palete').append(elems)}
+function setHead(head){
+	$('#head').empty();
+	$('#head').append(head);
+}

@@ -5,6 +5,7 @@
 <script defer="defer">
 $( "#content" ).load("painter.html", function(){
     prepareForm();
+    setHead('Расчет состава бетона на ленточный фундамент');
     dpd.regions.get({name:1},function(data, err){
         var source = [];
         for(i in data) {

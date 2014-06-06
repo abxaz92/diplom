@@ -133,7 +133,7 @@ body{
 				background-color: rgba(158, 158, 158, 0.75);
 			}
 			.toggle span{
-				margin: 250px;
+				margin: auto;
 				margin-bottom: 1px;
 			}
 			.print{
