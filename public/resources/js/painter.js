@@ -253,7 +253,7 @@ Painter.prototype.initPalete = function(){
     });
 
     // 
-    $('#lineWeight').jqxInput({placeHolder: "Стена: 400мм", height: 30, width: 185});
+    $('#lineWeight').jqxInput({placeHolder: "Толщина стен: 400мм", height: 30, width: 185});
     $('#lineWeight').on('change', function(){
         if(this.value == "") self.lineWeight = 10 
             else if( parseFloat(this.value) > 1000 || parseFloat(this.value) < 120 ) alert("Недопустимая ширина стены")

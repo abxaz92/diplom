@@ -5,19 +5,13 @@ $( "#content" ).load("painter.html", function(){
 
 function prepare(){
     $('#lineWeight').hide();
-    $('#content').append('<div id="window_type"><div>Размер кирпича и кладки</div><div ><div id="type" class=""></div></div></div>');
-    $("#window_type").jqxWindow({ width: 500, height: 130, isModal: true, autoOpen: false });
-    
+
     $('#palete').append(
         '<input type="text" id="deep"/>'
         +'<input type="text" id="height"/>'
-        +'<input type="button" value="Расчитать" id="calculate" />');
-    $('#deep').jqxInput({placeHolder: "Высота: 3м", height: 20, width: 90});
-    $('#height').jqxInput({placeHolder: "Толщ: 200мм", height: 20, width: 90});
-    
-    
-    
-
+        +'<div class="calculate"><input type="button" value="Расчитать" id="calculate" /></div>');
+    $('#deep').jqxInput({placeHolder: "Высота от пола: 3м", height: 25, width: 185});
+    $('#height').jqxInput({placeHolder: "Толщина: 200мм", height: 25, width: 185});
 
     
     $("#calculate").jqxButton({ width: '90', height:'25'});
@@ -29,12 +23,41 @@ function prepare(){
         var height = (heightVal == "") ? 200 : heightVal;
         dpd.floorwood.get({ploshady:square,tolshina:height, visota:deep}, function(r,e){
             console.log(r,e)
-            $('#resultWindow').jqxWindow('open');
-            $("#resultContainer").empty();
-            $("#resultContainer").append('<p align=left> Стойки '+r.stoyki+' шт  </p>'
-                + '<p align=left> Унивилки '+r.univilki+' шт  </p>'
-                + '<p align=left> Треноги '+r.trenogi+' шт  </p>'
-                + '<p align=left>Балка '+r.balki+' м.п.</p>');
+            // $('#resultWindow').jqxWindow('open');
+            // $("#resultContainer").empty();
+            // $("#resultContainer").append('<p align=left> Стойки '+r.stoyki+' шт  </p>'
+            //     + '<p align=left> Унивилки '+r.univilki+' шт  </p>'
+            //     + '<p align=left> Треноги '+r.trenogi+' шт  </p>'
+            //     + '<p align=left>Балка '+r.balki+' м.п.</p>');
+
+            painter.writeMessage('');
+            painter.stage.toImage({
+                 callback: function(image) {
+                    showResult(''
+                        +'<table style="margin: auto; font-size: 12pt;">'
+                        +    '<tbody>'
+                        +        '<tr>'
+                        +            '<td style="width: 200px;">Стойки</td>'
+                        +            '<td>'+r.stoyki+' шт</td>'
+                        +        '</tr>'
+                        +        '<tr>'
+                        +            '<td style="width: 200px;">Унивилки</td>'
+                        +            '<td>'+r.univilki+' шт</td>'
+                        +        '</tr>'
+                        +        '<tr>'
+                        +            '<td style="width: 200px;">Треноги </td>'
+                        +            '<td>'+r.trenogi+' шт</td>'
+                        +        '</tr>'
+                        +        '<tr>'
+                        +            '<td style="width: 200px;">Балка</td>'
+                        +            '<td>'+r.balki+' м.п.</td>'
+                        +        '</tr>'
+                        +    '</tbody>'
+                        +'</table>', image
+                    );
+                    
+                 }
+            });
         });
     });
     

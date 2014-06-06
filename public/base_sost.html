@@ -33,7 +33,7 @@ var prepareForm = function(){
 
 
     $("#calculate").jqxButton({ width: '90', height:'40'});
-    $('#deep').jqxInput({placeHolder: "Высота: 2м", height: 30, width: 185});
+    $('#deep').jqxInput({placeHolder: "Надземная часть: 2м", height: 30, width: 185});
     $("#marka").jqxDropDownList({source: source
         ,displayMember: "name"
         ,valueMember: "id"
@@ -91,11 +91,11 @@ var calc = function(){
                 painter.writeMessage('');
                 painter.stage.toImage({
                      callback: function(image) {
-                        showResult('<input type="button" value="Печать" id="print"/>'
+                        showResult(''
                             +'<table style="margin: auto; font-size: 12pt;">'
                             +    '<tbody>'
                             +        '<tr>'
-                            +            '<td style="width: 200px;">Бетона</td>'
+                            +            '<td style="width: 200px;">Бетон</td>'
                             +            '<td>'+res.betonCol+' м3</td>'
                             +        '</tr>'
                             +        '<tr>'

@@ -9,10 +9,10 @@ function prepare(){
     $("#window_type").jqxWindow({ width: 500, height: 130, isModal: true, autoOpen: false });
     
     $('#palete').append(
-        '<img id="brick" class="unselected cp" src="resources/img/bricks/1.gif" width="90" height="55" border="0" alt="javascript button">'
+        '<img id="brick" class="unselected cp" src="resources/img/bricks/1.gif" style="width: 114px; margin-left: 38px;" alt="javascript button">'
         +'<input type="text" id="deep"/>'
-        +'<input type="button" value="Расчитать" id="calculate" />');
-    $('#deep').jqxInput({placeHolder: "Высота: 3м", height: 20, width: 90});
+        +'<div class="calculate"><input type="button" value="Расчитать" id="calculate" /></div>');
+    $('#deep').jqxInput({placeHolder: "Высота стен: 3м", height: 30, width: 185});
     
     var source = [{img: 1, id:"56.50", name:"Кирпич одинарный, кладка в 0,5 кирпича, толщина стен - 120 мм"}
         ,{img: 2, id:"114.3", name:"Кирпич одинарный, кладка в 1 кирпич, толщина стен - 250 мм"}
@@ -44,8 +44,8 @@ function prepare(){
     })
 
 
-    $("#type").jqxDropDownList({source: source, displayMember: "name", valueMember: "id", selectedIndex: 0, width: '420', height: '20', autoDropDownHeight: true, theme: "metro"});
-    $("#calculate").jqxButton({ width: '90', height:'25'});
+    $("#type").jqxDropDownList({source: source, displayMember: "name", valueMember: "id", selectedIndex: 0, width: '450', height: '20', autoDropDownHeight: true, theme: "metro"});
+    $("#calculate").jqxButton({ width: '90', height:'40'});
     $("#calculate").on('click', function () {
         var perimeter = painter.getPrimeter();
         var deepVal = $("#deep").val(); 
@@ -58,7 +58,7 @@ function prepare(){
             painter.writeMessage('');
             painter.stage.toImage({
                  callback: function(image) {
-                    showResult('<input type="button" value="Печать" id="print"/>'
+                    showResult(''
                         +'<table style="margin: auto; font-size: 12pt;">'
                         +    '<tbody>'
                         +        '<tr>'

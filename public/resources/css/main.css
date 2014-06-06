@@ -114,6 +114,7 @@ body{
 			.calculate{
 				margin: auto;
 				width: 100px;
+				margin-top: 5px;
 			}
 			.paleteBtns{
 				width: 112px;
@@ -134,6 +135,16 @@ body{
 			.toggle span{
 				margin: 250px;
 				margin-bottom: 1px;
+			}
+			.print{
+				height: 53px;
+				float: right;
+			}
+			.res_img{
+				border: solid;
+				border-color: #B3B3B3;
+				border-width: 1px;
+				margin-top: 12px;
 			}
 
 	#footer{
