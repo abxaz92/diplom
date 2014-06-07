@@ -6,12 +6,13 @@ $( "#content" ).load("painter.html", function(){
 
 function prepare(){
     $('#lineWeight').hide();
-    $('#content').append('<div id="window_type"><div>Размер кирпича и кладки</div><div ><div id="type" class=""></div></div></div>');
-    $("#window_type").jqxWindow({ width: 500, height: 130, isModal: true, autoOpen: false });
+    // $('#content').append('<div id="window_type"><div>Размер кирпича и кладки</div><div ><div id="type" class=""></div></div></div>');
+    // $("#window_type").jqxWindow({ width: 500, height: 130, isModal: true, autoOpen: false });
     
     $('#palete').append(
         '<img id="brick" class="unselected cp" src="resources/img/bricks/1.gif" style="width: 114px; margin-left: 38px;" alt="javascript button">'
         +'<input type="text" id="deep"/>'
+        +'<div>Размер кирпича и кладки</div><div ><div id="type" class=""></div></div>'
         +'<div class="calculate"><input type="button" value="Расчитать" id="calculate" /></div>');
     $('#deep').jqxInput({placeHolder: "Высота стен: 3м", height: 30, width: 185});
     
@@ -32,20 +33,16 @@ function prepare(){
         ,{img: 5, id:"137.5", name:"Камень двойной, кладка в 2,5 кирпича, толщина стен - 640 мм"}
     ];
 
-    $('#window_type').on('select', function (event){
+    $('#type').on('select', function (event){
         var args = event.args;
         if (args) {
             var img = args.item.originalItem.img;
             $('#brick').attr("src", "resources/img/bricks/"+img+".gif");
-            $('#window_type').jqxWindow('close');
         }                        
     });
-    $('#brick').bind("click",function(){
-        $('#window_type').jqxWindow('open');
-    })
 
 
-    $("#type").jqxDropDownList({source: source, displayMember: "name", valueMember: "id", selectedIndex: 0, width: '450', height: '20', autoDropDownHeight: true, theme: "metro"});
+    $("#type").jqxDropDownList({source: source, displayMember: "name", valueMember: "id", selectedIndex: 0, width: '185', height: '25',dropDownWidth: 450, autoDropDownHeight: true, theme: "metro"});
     $("#calculate").jqxButton({ width: '90', height:'40'});
     $("#calculate").on('click', function () {
         var perimeter = painter.getPrimeter();
