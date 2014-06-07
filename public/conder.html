@@ -1,0 +1,65 @@
+
+<script defer="defer">
+$( "#content" ).load("painter.html", function(){
+    prepare();
+    setHead('Расчет мощности охлаждения кондиционера');
+});
+
+function prepare(){
+    $('#lineWeight').hide();
+    $('#palete').append(''
+        +'<div class="border">Cтепень освещенности солнечными лучами'
+        +'<div id="type" class=""></div></div>'
+        +'<input type="text" id="deep"/>'
+        +'<input type="text" id="pcCol"/>'
+        +'<input type="text" id="people"/>'
+        +'<div class="calculate"><input type="button" value="Расчитать" id="calculate" /></div>');
+    $('#deep').jqxInput({placeHolder: "Высота потолка: 3м", height: 30, width: 185});
+    $('#pcCol').jqxInput({placeHolder: "ПК и телевизоров: 1", height: 30, width: 185});
+    $('#people').jqxInput({placeHolder: "Количество людей: 1", height: 30, width: 185});
+    
+    var source = [
+         {id:"30", name:"Слабая"}
+        ,{id:"35", name:"Средняя"}
+        ,{id:"40", name:"Сильная"}
+    ];
+
+
+    $("#type").jqxDropDownList({source: source, displayMember: "name", valueMember: "id", selectedIndex: 0, width: '185', height: '25', autoDropDownHeight: true, theme: "metro"});
+    $("#calculate").jqxButton({ width: '90', height:'40'});
+    $("#calculate").on('click', function () {
+        var tmp = $("#pcCol").val(); 
+        var pcCol = (tmp == "") ? 1 : tmp;
+        var tmp = $("#people").val(); 
+        var people = (tmp == "") ? 1 : tmp;
+        var deepVal = $("#deep").val(); 
+        var height = (deepVal == "") ? 3 : deepVal;
+        var square = painter.getFloorSquare();
+        var type = $('#type').val();
+
+        dpd.conder.get({square:square, height:height, insol:type, pcCol:pcCol, people:people}, function(r,e){
+            console.log(r,e)
+            painter.writeMessage('');
+            painter.stage.toImage({
+                 callback: function(image) {
+                    showResult(''
+                        +'<table style="margin: auto; font-size: 12pt;">'
+                        +    '<tbody>'
+                        +        '<tr>'
+                        +            '<td style="width: 300px;">Мощность охлаждения кондиционера</td>'
+                        +            '<td>'+r+'</td>'
+                        +        '</tr>'
+                        +    '</tbody>'
+                        +'</table>', image
+                    );
+                    
+                 }
+            });
+        });
+    });
+    
+}
+
+    
+</script>
+

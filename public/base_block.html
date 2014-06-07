@@ -1,0 +1,117 @@
+
+
+<script defer="defer">
+$( "#content" ).load("painter.html", function(){
+    prepareForm();
+    setHead('Расчет колличества фундаментных блоков');
+    dpd.regions.get({name:1},function(data, err){
+        var source = [];
+        for(i in data) {
+            source.push(data[i].city);
+        }
+        $('#region').jqxInput({placeHolder: "Регион", height: 30, width: 185, source:source});
+    });
+});
+
+var prepareForm = function(){
+   $('#lineWeight').hide(); 
+    toPalete('<input type="text" id="deep"/>'
+        +'<input type="text" id="region"/>'
+        +'<div class="border">Грунт<div id="grunt" class="inln"></div></div>'
+        +'<div class="border">Тип блока<div id="marka" class="inln"></div></div>'
+        +'<div class="calculate"><input type="button" value="Расчитать" id="calculate" /></div>');
+
+    var source = [
+         {name:"ФБС 24-3-6 2380 X 300 X 580", id:"0.41", shir:300}
+        ,{name:"ФБС 12-3-6 1180 X 300 X 580", id:"0.21", shir:300}
+        ,{name:"ФБС 9-3-6  880  X 300 X 580", id:"0.15", shir:300}
+        ,{name:"ФБС 24-4-6 2380 X 400 X 580", id:"0.54", shir:400}
+        ,{name:"ФБС 12-4-6 1180 X 400 X 580", id:"0.27", shir:400}
+        ,{name:"ФБС 9-4-6  2380 X 300 X 580", id:"0.20", shir:300}
+        ,{name:"ФБС 24-5-6 2380 X 500 X 580", id:"0.68", shir:500}
+        ,{name:"ФБС 12-5-6 1180 X 500 X 580", id:"0.23", shir:500}
+        ,{name:"ФБС 9-5-6  800  X 500 X 580", id:"0.23", shir:500}
+        ,{name:"ФБС 24-6-6 2380 X 600 X 580", id:"0.82", shir:600}
+        ,{name:"ФБС 12-6-6 1180 X 600 X 580", id:"0.41", shir:600}
+        ,{name:"ФБС 9-6-6  880  X 600 X 580", id:"0.31", shir:600}
+    ];
+
+
+
+    $("#calculate").jqxButton({ width: '90', height:'40'});
+    $('#deep').jqxInput({placeHolder: "Надземная часть: 1м", height: 30, width: 185});
+    $("#marka").jqxDropDownList({source: source
+        ,displayMember: "name"
+        ,valueMember: "id"
+        ,selectedIndex: 3
+        ,width: '185'
+        ,height: '30'
+        ,autoDropDownHeight: true
+        ,dropDownWidth: 200
+        ,theme: "metro"
+    });      
+    $("#grunt").jqxDropDownList({source: [{name:"Глина,суглинки", id:"glina"},{name:"Пески,супеси", id:"supes"}]
+        ,displayMember: "name"
+        ,valueMember: "id"
+        ,selectedIndex: 0
+        ,width: '185'
+        ,height: '30'
+        ,autoDropDownHeight: true
+        ,theme: "metro"
+    });    
+
+    $("#calculate").on('click', function () { calc() });
+}
+var calc = function(){
+
+    
+
+    dpd.regions.get({city : $('#region').val()}, function(data, err){
+        data = data[0];
+        var grunt = $('#grunt').val();
+        if (data && data[grunt]){
+            var item   = $("#marka").jqxDropDownList('getSelectedItem').originalItem;
+            var shir   = item.shir / 1000;
+            var blockV   = item.id;
+            var tmp = $("#deep").val();
+            var deep = (tmp == "") ? 1 : tmp;
+            
+            var heigh       = (data[grunt] / 100) + deep;
+            var perimeter   = painter.getPrimeter();
+            var V   = perimeter * shir * heigh;
+            var blockCol = V / blockV + 15;
+            if(blockCol == 15 ){
+                blockCol = 0;
+            }
+
+
+            painter.writeMessage('');
+            painter.stage.toImage({
+                 callback: function(image) {
+                    showResult(''
+                        +'<table style="margin: auto; font-size: 12pt;">'
+                        +    '<tbody>'
+                        +        '<tr>'
+                        +            '<td style="width: 200px;">Вид блоков</td>'
+                        +            '<td>'+item.name+'</td>'
+                        +        '</tr>'
+                        +        '<tr>'
+                        +            '<td>Количество блоков</td>'
+                        +            '<td>'+Math.round(blockCol, 0)+' шт</td>'
+                        +        '</tr>'
+                        +    '</tbody>'
+                        +'</table>', image
+                    );
+                    
+                 }
+            });
+
+
+        } else alert("Указанный вами регион отсутсвует в базе данных");
+        
+    });
+    
+}
+    
+</script>
+
